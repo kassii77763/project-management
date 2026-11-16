@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Portfolio Map</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#F7F6F3',
+        primaryTextColor: '#1F2937',
+        primaryBorderColor: '#D1D5DB',
+        lineColor: '#6B7280',
+        secondaryColor: '#FFFFFF',
+        tertiaryColor: '#F3F4F6',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", sans-serif',
+        fontSize: '13px'
+      }
+    });
+    window.mermaid = mermaid;
+  </script>
+  <style>
+    body {
+      background-color: #F7F6F3;
+      color: #1F2937;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", sans-serif;
+    }
+    .bento-card {
+      background-color: #FFFFFF;
+      border: 1px solid #EAEAEA;
+      border-radius: 12px;
+    }
+    .pill-tag {
+      background-color: #F7F6F3;
+      border: 1px solid #E5E7EB;
+      color: #4B5563;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .project-card.active {
+      border-color: #1F2937;
+      box-shadow: 0 0 0 1px #1F2937;
+    }
+    .tab-btn-active {
+      background-color: #1F2937;
+      color: #FFFFFF;
+    }
+    .tab-btn-inactive {
+      color: #6B7280;
+    }
+    .tab-btn-inactive:hover {
+      color: #1F2937;
+    }
+  </style>
+</head>
+<body class="min-h-screen p-5 md:p-8">
+
+  <!-- Top Minimal Header -->
+  <header class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-[#EAEAEA]">
+    <div>
+      <div class="flex items-center gap-3">
+        <h1 class="text-lg font-semibold tracking-tight text-[#1F2937]">Project Portfolio Map</h1>
+        <span class="text-xs px-2 py-0.5 rounded bg-white border border-[#EAEAEA] text-[#6B7280]" id="sync-status">
+          Auto-Sync: -
+        </span>
+      </div>
+      <p class="text-xs text-[#6B7280] mt-1">全プロジェクトの最新進捗（PROGRESS.md）・外部KPI・開発＆運用ガバナンス統合コックピット</p>
+    </div>
+
+    <!-- 3-Mode Switcher -->
+    <nav class="flex items-center gap-1 bg-white p-1 rounded-lg border border-[#EAEAEA]">
+      <button onclick="switchMode('map')" id="btn-map" class="px-3 py-1.5 text-xs font-medium rounded-md tab-btn-active transition">
+        1. 構成・導線マップ
+      </button>
+      <button onclick="switchMode('kpi')" id="btn-kpi" class="px-3 py-1.5 text-xs font-medium rounded-md tab-btn-inactive transition">
+        2. 外部KPI・トラフィック
+      </button>
+      <button onclick="switchMode('audit')" id="btn-audit" class="px-3 py-1.5 text-xs font-medium rounded-md tab-btn-inactive transition">
+        3. 開発・運用ハーネス体制
+      </button>
+    </nav>
+  </header>
+
+  <!-- =========================================================
+       TAB 1: 構成・導線マップ
+  ========================================================== -->
+  <main id="view-map" class="max-w-7xl mx-auto space-y-6">
+
+    <!-- 1. 全プロジェクト俯瞰グリッド -->
+    <section>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">Active Projects (クリックで詳細・PROGRESS.md・構成図を表示)</h2>
+        <span id="project-summary-count" class="text-xs text-[#6B7280]">- Active / - Archived</span>
+      </div>
+      <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5"></div>
+    </section>
+
+    <!-- 2. 選択中プロジェクトの詳細 Bento ビュー -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+      <!-- 左カラム (5/12): PROGRESS.md 最新進捗 + 物理メタ情報 -->
+      <div class="lg:col-span-5 space-y-5">
+
+        <!-- 最新進捗（PROGRESS.md 同期） -->
+        <div class="bento-card p-5 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-[#1F2937]">最新進捗（PROGRESS.md）</h3>
+            <span id="progress-updated-at" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#F7F6F3] text-[#6B7280] border border-[#EAEAEA]">
+              更新: -
+            </span>
+          </div>
+
+          <div class="bg-[#F7F6F3] border border-[#EAEAEA] rounded-lg px-3 py-2.5">
+            <div class="text-[10px] font-semibold uppercase tracking-wider text-[#6B7280] mb-0.5">現在のフェーズ / ステータス</div>
+            <div id="progress-phase" class="text-xs font-medium text-[#1F2937] leading-relaxed">-</div>
+          </div>
+
+          <div id="progress-highlights-wrap" class="hidden">
+            <div class="text-[11px] font-medium text-[#6B7280] mb-1.5">直近ハイライト</div>
+            <ul id="progress-highlights" class="space-y-1.5 text-xs text-[#374151]"></ul>
+          </div>
+
+          <div>
+            <div class="text-[11px] font-medium text-[#6B7280] mb-1.5">次のアクション（未完了のみ）</div>
+            <ul id="progress-next-list" class="space-y-1.5"></ul>
+          </div>
+        </div>
+
+        <!-- 物理パス・技術・ハーネス一覧 -->
+        <div class="bento-card p-5 space-y-4">
+          <div>
+            <div class="text-[11px] font-medium text-[#6B7280] mb-1">ローカルフォルダパス</div>
+            <div class="flex items-center justify-between bg-[#F7F6F3] px-3 py-2 rounded border border-[#EAEAEA]">
+              <code id="detail-path" class="text-xs text-[#1F2937] truncate">-</code>
+              <button onclick="copyPath()" id="copy-btn" class="text-[11px] text-[#6B7280] hover:text-[#1F2937] ml-2 shrink-0">コピー</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="text-[11px] font-medium text-[#6B7280] mb-1.5">使用技術・外部API</div>
+            <div id="detail-stack" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <div>
+            <div class="text-[11px] font-medium text-[#6B7280] mb-1.5">組み込みハーネス（品質ゲート）</div>
+            <div id="detail-harness" class="flex flex-wrap gap-1.5"></div>
+          </div>
+
+          <div class="pt-2 border-t border-[#EAEAEA] flex items-center justify-between text-xs">
+            <span class="text-[#6B7280]">公開URL / エンドポイント</span>
+            <a id="detail-url" href="#" target="_blank" rel="noopener noreferrer" class="text-[#1F2937] underline underline-offset-2 hover:opacity-75">開く ↗</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 右カラム (7/12): 北極星KPI ＆ 数値入りMermaid構成図 -->
+      <div class="lg:col-span-7 bento-card p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-[#EAEAEA]">
+            <div>
+              <h3 id="diagram-title" class="text-sm font-semibold text-[#1F2937]">システム ＆ ファネル構成図</h3>
+              <p class="text-xs text-[#6B7280] mt-0.5">入力 → ハーネス検証 → 公開・導線のデータフローと最新API数値</p>
+            </div>
+            <span class="text-[11px] font-mono text-[#6B7280] bg-[#F7F6F3] px-2 py-1 rounded border border-[#EAEAEA]">
+              portfolio.json 同期
+            </span>
+          </div>
+
+          <!-- 北極星KPI -->
+          <div id="north-star-bar" class="grid grid-cols-2 gap-3 mb-4"></div>
+        </div>
+
+        <!-- Mermaid図描画エリア -->
+        <div id="mermaid-container" class="flex-1 flex items-center justify-center bg-[#F7F6F3]/60 rounded-lg p-4 overflow-x-auto min-h-[280px] border border-[#EAEAEA]/60"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- =========================================================
+       TAB 2: 外部KPI・トラフィック（YouTube / Cloudflare 統合ビュー）
+  ========================================================== -->
+  <main id="view-kpi" class="max-w-7xl mx-auto hidden space-y-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-sm font-semibold text-[#1F2937]">外部API 集客・トラフィック一覧</h2>
+        <p class="text-xs text-[#6B7280] mt-0.5">YouTube Data API / Cloudflare Web Analytics GraphQL API / ハーネス実測の定期取得サマリー</p>
+      </div>
+      <span class="text-xs font-mono text-[#6B7280] bg-white px-2.5 py-1 rounded border border-[#EAEAEA]">
+        Source: portfolio.json
+      </span>
+    </div>
+
+    <div id="kpi-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+  </main>
+
+  <!-- =========================================================
+       TAB 3: 開発・運用ハーネス体制
+  ========================================================== -->
+  <main id="view-audit" class="max-w-7xl mx-auto hidden space-y-6">
+    <div class="bento-card p-5 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h2 class="text-sm font-semibold text-[#1F2937]">開発体制 ＆ 運用オペレーション・マトリクス</h2>
+        <p class="text-xs text-[#6B7280] mt-0.5">
+          各プロジェクトの「開発時の品質ゲート（ハーネス）」と「リリース後の日常運用体制（自動スケジュール・トリガー・人間介入）」の構造一覧
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <span id="audit-badge" class="text-xs font-mono px-2.5 py-1 rounded bg-[#F7F6F3] border border-[#EAEAEA] text-[#1F2937]">
+          Exit Code 0 (ALL PASS)
+        </span>
+      </div>
+    </div>
+
+    <div id="governance-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+  </main>
+
+  <script>
+    const fallbackData = {
+      meta: {
+        last_sync: "未同期 (fallback)",
+        active_count: 5,
+        archived_count: 15,
+        harness_gate_status: "Exit Code 0 (ALL PASS)"
+      },
+      projects: []
+    };
+
+    let appData = fallbackData;
+    let selectedId = null;
+
+    function esc(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    async function loadPortfolioData() {
+      try {
+        const res = await fetch('./portfolio.json', { cache: 'no-store' });
+        if (res.ok) {
+          const json = await res.json();
+          if (json && Array.isArray(json.projects) && json.projects.length > 0) {
+            appData = json;
+            selectedId = appData.projects[0].id;
+          }
+        }
+      } catch (e) {
+        console.warn('portfolio.json load failed:', e);
+      }
+
+      document.getElementById('sync-status').textContent = `Auto-Sync: ${appData.meta.last_sync}`;
+      document.getElementById('project-summary-count').textContent = `${appData.meta.active_count} Active / ${appData.meta.archived_count} Archived`;
+      document.getElementById('audit-badge').textContent = appData.meta.harness_gate_status;
+
+      renderGrid();
+      renderKpiView();
+      renderGovernanceView();
+      if (selectedId) {
+        await selectProject(selectedId);
+      }
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('project-grid');
+      grid.innerHTML = appData.projects.map(p => {
+        const isActive = p.id === selectedId;
+        const mainKpi = p.north_star_kpis && p.north_star_kpis[0]
+          ? `${p.north_star_kpis[0].label}: ${p.north_star_kpis[0].value}`
+          : '';
+        const updatedDate = (p.progress && p.progress.updated_at && p.progress.updated_at !== '-')
+          ? p.progress.updated_at.slice(0, 10)
+          : '-';
+        return `
+          <div onclick="selectProject('${esc(p.id)}')" class="bento-card project-card ${isActive ? 'active' : ''} p-4 cursor-pointer transition hover:border-[#9CA3AF] flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-[11px] font-medium text-[#6B7280]">${esc(p.status)}</span>
+                <span class="text-[10px] font-mono text-[#9CA3AF]">${esc(updatedDate)}</span>
+              </div>
+              <h3 class="text-sm font-semibold text-[#1F2937] mb-0.5 truncate">${esc(p.name)}</h3>
+              <p class="text-xs text-[#6B7280] mb-3 truncate">${esc(p.role)}</p>
+            </div>
+            <div class="space-y-1.5">
+              ${mainKpi ? `<div class="text-[11px] font-medium text-[#1F2937] truncate">${esc(mainKpi)}</div>` : ''}
+              <div class="text-[10px] font-mono text-[#6B7280] bg-[#F7F6F3] px-2 py-1 rounded truncate">
+                ${esc(p.path)}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function selectProject(id) {
+      selectedId = id;
+      renderGrid();
+      const p = appData.projects.find(item => item.id === id);
+      if (!p) return;
+
+      document.getElementById('detail-path').textContent = p.path;
+      const urlEl = document.getElementById('detail-url');
+      if (p.url && p.url !== '#') {
+        urlEl.href = p.url;
+        urlEl.textContent = '開く ↗';
+        urlEl.classList.remove('pointer-events-none', 'text-[#9CA3AF]', 'no-underline');
+        urlEl.classList.add('text-[#1F2937]', 'underline');
+      } else {
+        urlEl.removeAttribute('href');
+        urlEl.textContent = 'ローカル専用 / 未公開';
+        urlEl.classList.add('pointer-events-none', 'text-[#9CA3AF]', 'no-underline');
+        urlEl.classList.remove('text-[#1F2937]', 'underline');
+      }
+
+      document.getElementById('diagram-title').textContent = `${p.name} — システム ＆ ファネル構成図`;
+
+      document.getElementById('detail-stack').innerHTML = (p.stack || [])
+        .map(s => `<span class="pill-tag">${esc(s)}</span>`).join('');
+
+      document.getElementById('detail-harness').innerHTML = (p.harness || [])
+        .map(h => `<span class="pill-tag">${esc(h)}</span>`).join('');
+
+      // PROGRESS.md 最新情報の描画
+      const prog = p.progress || {};
+      document.getElementById('progress-updated-at').textContent = `更新: ${prog.updated_at || '-'}`;
+      document.getElementById('progress-phase').textContent = prog.phase || '記載なし';
+
+      const hlWrap = document.getElementById('progress-highlights-wrap');
+      const hlList = document.getElementById('progress-highlights');
+      const highlights = prog.highlights || [];
+      if (highlights.length > 0) {
+        hlWrap.classList.remove('hidden');
+        hlList.innerHTML = highlights.map(h => `
+          <li class="flex items-start gap-2 leading-relaxed">
+            <span class="text-[#9CA3AF] mt-0.5">•</span>
+            <span>${esc(h)}</span>
+          </li>
+        `).join('');
+      } else {
+        hlWrap.classList.add('hidden');
+        hlList.innerHTML = '';
+      }
+
+      const nextActions = prog.next_actions || [];
+      const nextList = document.getElementById('progress-next-list');
+      if (nextActions.length === 0) {
+        nextList.innerHTML = `<li class="text-xs text-[#6B7280] py-1">未完了タスクの記載はありません</li>`;
+      } else {
+        nextList.innerHTML = nextActions.map((act, idx) => `
+          <li class="flex items-start gap-2 p-2 rounded-lg bg-[#F7F6F3] border border-[#EAEAEA]">
+            <span class="text-[11px] font-mono text-[#6B7280] mt-0.5 shrink-0">${idx + 1}.</span>
+            <span class="text-xs text-[#1F2937] leading-relaxed">${esc(act)}</span>
+          </li>
+        `).join('');
+      }
+
+      // 北極星KPI
+      const kpis = p.north_star_kpis || [];
+      document.getElementById('north-star-bar').innerHTML = kpis.map(k => `
+        <div class="bg-[#F7F6F3] border border-[#EAEAEA] rounded-lg px-3.5 py-2.5 flex items-baseline justify-between">
+          <div>
+            <div class="text-[11px] text-[#6B7280]">${esc(k.label)}</div>
+            <div class="text-base font-semibold text-[#1F2937] mt-0.5">${esc(k.value)}</div>
+          </div>
+          <span class="text-[11px] font-mono text-[#6B7280]">${esc(k.delta)}</span>
+        </div>
+      `).join('');
+
+      // Mermaid図描画
+      let mermaidCode = p.mermaid_template || '';
+      kpis.forEach((k, idx) => {
+        mermaidCode = mermaidCode.replaceAll(`{{kpi_${idx}}}`, `${k.label}: ${k.value}`);
+      });
+
+      const container = document.getElementById('mermaid-container');
+      if (window.mermaid && mermaidCode) {
+        try {
+          container.innerHTML = '';
+          const { svg } = await window.mermaid.render('mermaid-svg-' + Date.now(), mermaidCode);
+          container.innerHTML = svg;
+        } catch (err) {
+          container.innerHTML = `<pre class="text-xs text-[#6B7280]">${esc(mermaidCode)}</pre>`;
+        }
+      }
+    }
+
+    function renderKpiView() {
+      const kpiGrid = document.getElementById('kpi-grid');
+      kpiGrid.innerHTML = appData.projects.map(p => {
+        const detail = p.analytics_detail || { source: '-', metrics: [], recent_items: [] };
+        const kpis = p.north_star_kpis || [];
+        return `
+          <div class="bento-card p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-[#EAEAEA] pb-3">
+              <div>
+                <h3 class="text-sm font-semibold text-[#1F2937]">${esc(p.name)}</h3>
+                <p class="text-[11px] text-[#6B7280] mt-0.5">${esc(p.role)}</p>
+              </div>
+              <span class="pill-tag">${esc(detail.source)}</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              ${kpis.map(k => `
+                <div class="bg-[#F7F6F3] p-3 rounded-lg border border-[#EAEAEA]">
+                  <div class="text-[11px] text-[#6B7280]">${esc(k.label)}</div>
+                  <div class="text-lg font-semibold text-[#1F2937] mt-0.5">${esc(k.value)}</div>
+                  <div class="text-[11px] font-mono text-[#6B7280] mt-0.5">${esc(k.delta)}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex items-center gap-4 text-xs text-[#4B5563] pt-1">
+              ${(detail.metrics || []).map(m => `
+                <div><span class="text-[#6B7280]">${esc(m.name)}:</span> <strong class="font-medium text-[#1F2937]">${esc(m.value)}</strong></div>
+              `).join('')}
+            </div>
+
+            <div>
+              <div class="text-[11px] font-medium text-[#6B7280] mb-2">主要コンテンツ / エンドポイント実績</div>
+              <ul class="space-y-1.5">
+                ${(detail.recent_items || []).map(item => `
+                  <li class="flex items-center justify-between text-xs py-1.5 px-2.5 rounded bg-[#F7F6F3]">
+                    <span class="text-[#1F2937] truncate pr-2">${esc(item.title)}</span>
+                    <span class="font-mono text-[#6B7280] shrink-0">${esc(item.views)}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderGovernanceView() {
+      const grid = document.getElementById('governance-grid');
+      grid.innerHTML = appData.projects.map(p => {
+        const gov = p.governance || { dev_pattern: '-', dev_gates: [], ops_pattern: '-', ops_routines: [] };
+        return `
+          <div class="bento-card p-5 space-y-5 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2 border-b border-[#EAEAEA] pb-3 mb-4">
+                <div>
+                  <h3 class="text-sm font-semibold text-[#1F2937]">${esc(p.name)}</h3>
+                  <code class="text-[11px] text-[#6B7280]">${esc(p.path)}</code>
+                </div>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#F7F6F3] border border-[#EAEAEA] text-[#1F2937]">
+                  GATE: PASS
+                </span>
+              </div>
+
+              <div class="mb-5">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold uppercase tracking-wider text-[#6B7280]">1. 開発体制（品質ゲート・ハーネス）</span>
+                </div>
+                <div class="text-xs font-medium text-[#1F2937] bg-[#F7F6F3] px-3 py-2 rounded border border-[#EAEAEA] mb-2.5">
+                  ${esc(gov.dev_pattern)}
+                </div>
+                <div class="space-y-2">
+                  ${(gov.dev_gates || []).map(g => `
+                    <div class="text-xs pl-3 border-l-2 border-[#D1D5DB]">
+                      <div class="font-medium text-[#1F2937]">${esc(g.name)}</div>
+                      <div class="text-[11px] text-[#6B7280] mt-0.5">${esc(g.rule)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-[11px] font-semibold uppercase tracking-wider text-[#6B7280]">2. 運用体制（自動同期・人間介入フロー）</span>
+                </div>
+                <div class="text-xs font-medium text-[#1F2937] bg-[#F7F6F3] px-3 py-2 rounded border border-[#EAEAEA] mb-2.5">
+                  ${esc(gov.ops_pattern)}
+                </div>
+                <ul class="space-y-1.5">
+                  ${(gov.ops_routines || []).map(r => `
+                    <li class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs p-2 rounded bg-[#F7F6F3]/60 border border-[#EAEAEA]/60">
+                      <span class="font-mono text-[11px] text-[#4B5563] shrink-0">[${esc(r.trigger)}]</span>
+                      <span class="text-[#1F2937] sm:text-right">${esc(r.action)}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function switchMode(mode) {
+      const views = ['map', 'kpi', 'audit'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        const btn = document.getElementById(`btn-${v}`);
+        if (v === mode) {
+          el.classList.remove('hidden');
+          btn.className = 'px-3 py-1.5 text-xs font-medium rounded-md tab-btn-active transition';
+        } else {
+          el.classList.add('hidden');
+          btn.className = 'px-3 py-1.5 text-xs font-medium rounded-md tab-btn-inactive transition';
+        }
+      });
+    }
+
+    function copyPath() {
+      const path = document.getElementById('detail-path').textContent;
+      navigator.clipboard.writeText(path);
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '完了';
+      setTimeout(() => { btn.textContent = 'コピー'; }, 1200);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(loadPortfolioData, 100);
+    });
+  </script>
+</body>
+</html>

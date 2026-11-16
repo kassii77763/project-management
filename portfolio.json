@@ -1,0 +1,515 @@
+{
+  "meta": {
+    "last_sync": "2026-11-16 14:21 JST",
+    "active_count": 5,
+    "archived_count": 15,
+    "harness_gate_status": "Exit Code 0 (ALL PASS)"
+  },
+  "projects": [
+    {
+      "id": "youtube-shorts",
+      "name": "臨床解剖 YouTube Shorts",
+      "role": "集客の蛇口・認知拡大",
+      "status": "稼働中",
+      "path": "projects/youtube_visual_library",
+      "url": "https://www.youtube.com/channel/UCZ1AqHX59h7UCsCkIgHINrQ",
+      "git": {
+        "sha": "-",
+        "last_commit_date": "-"
+      },
+      "stack": [
+        "Python",
+        "Blender / Z-Anatomy",
+        "YouTube Data API",
+        "Playwright"
+      ],
+      "harness": [
+        "OpenCV画像ゲート",
+        "6大定量評価関数",
+        "セーフゾーン検査"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-03 15:45",
+        "phase": "Phase 1: 自動録画パイプライン検証完了 ➔ 初期10本投稿準備中",
+        "highlights": [],
+        "next_actions": [
+          "初期10本の定期投稿スケジュール確定と公開開始",
+          "YouTube Studioアナリティクスでの視聴維持率・LINE遷移率の実測値記録"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "YouTube 総再生数",
+          "value": "22,544回",
+          "delta": "34本公開"
+        },
+        {
+          "label": "チャンネル登録者",
+          "value": "6人",
+          "delta": "高評価 73"
+        }
+      ],
+      "mermaid_template": "flowchart LR\n  A[\"Z-Anatomy 3D素材\\n(youtube_visual_library)\"] --> B{\"6軸定量ハーネス\"}\n  B -->|1080x1920 PASS| C[\"YouTube Shorts\\n({{kpi_0}})\"]\n  C -->|固定コメント導線| D[\"PT学生学習帖\\n(Webポータル)\"]\n  C -->|LINE誘導| E[\"公式LINE\"]",
+      "governance": {
+        "dev_pattern": "決定論的6軸動画ゲート ＋ Z-Anatomy 3D座標追従パイプライン",
+        "dev_gates": [
+          {
+            "name": "OpenCV 画像品質ゲート",
+            "rule": "解像度・フレーム欠損・黒画面の機械的ゼロ検査"
+          },
+          {
+            "name": "YouTube セーフゾーン検査",
+            "rule": "X=70〜890, Y=200〜1480 へのUI格納と文字切れ防止"
+          },
+          {
+            "name": "音声分離タイムライン制御",
+            "rule": "出題・思考・正解・告知の無音区間分離による音声被り根絶"
+          }
+        ],
+        "ops_pattern": "半自動パイプライン（ローカル検証・アップロード → 毎時API自動同期）",
+        "ops_routines": [
+          {
+            "trigger": "動画制作時 (手動実行)",
+            "action": "run_shorts_harness.py による自動録画・品質監査"
+          },
+          {
+            "trigger": "毎時 (Task Scheduler)",
+            "action": "YouTube Data API v3 から全動画再生数・高評価数を自動取得"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "YouTube Data API v3",
+        "metrics": [
+          {
+            "name": "公開動画数",
+            "value": "34本"
+          },
+          {
+            "name": "総コメント",
+            "value": "13件"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "【PT国試予想】肘の後ろに付くこの筋肉はどっち？ #shorts #解剖学 #理学療法士",
+            "views": "1,709回"
+          },
+          {
+            "title": "【PT国試予想】青い停止部に付く筋肉はどっち？ #shorts #解剖学 #理学療法士",
+            "views": "1,670回"
+          },
+          {
+            "title": "【PT国試予想】骨盤を支えるこの筋肉はどっち？ #shorts #解剖学 #理学療法士",
+            "views": "1,359回"
+          },
+          {
+            "title": "【PT国試予想】肩のてっぺんに付く筋肉はどっち？ #shorts #解剖学 #理学療法士",
+            "views": "1,323回"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pt-portal",
+      "name": "とあるPT学生の学習帖",
+      "role": "メイン学習ポータル基盤",
+      "status": "運用中",
+      "path": "projects/pt_student_portal",
+      "url": "https://pt-student-portal.pages.dev",
+      "git": {
+        "sha": "5842cd5",
+        "last_commit_date": "2026-11-16"
+      },
+      "stack": [
+        "Cloudflare Pages",
+        "Cloudflare Analytics API",
+        "Vanilla JS",
+        "Google AdSense"
+      ],
+      "harness": [
+        "14軸ポータル監査",
+        "本番8大防衛ゲート",
+        "25校クローラーv2"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-09 14:21",
+        "phase": "【2026-11-09 最新】14軸ポータル監査指摘のハーネス統合＆本体修正完了:",
+        "highlights": [
+          "【2026-11-09 最新】14軸ポータル監査指摘のハーネス統合＆本体修正完了:",
+          "data-integrity-scanner.js に「CTAスロット外部リンク（note/LINE）のプレースホルダー・ダミーURL検知ルール」を昇格追加。",
+          "erify_smoke_drill.js のLINE短縮URL（lin.ee）適合化。",
+          "\u0007pp.js の神動画キュレーション科目フィルター（ .category || v.subject）フォールバック修正。"
+        ],
+        "next_actions": [
+          "【Step 3】取りこぼしゼロキャッシュポイント整理（Amazon参考書枠はアフィリエイト臭排除のため撤去完了、実用note導線・転職枠へ純化）。",
+          "【2026-11-09 最新】「Amazon解剖アトラス＆三種の神器（#gear）」およびフッター免責文を完全撤去。ダッシュボード同期＆ハーネスALL PASS完了。",
+          "本番リモート（origin/main）へのプッシュおよび Cloudflare Pages 本番自動反映。",
+          "スモークCTR・テレメトリ流入観測。"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "ユニーク訪問 (CF)",
+          "value": "110人",
+          "delta": "深度 3.82 PV/人"
+        },
+        {
+          "label": "ページビュー (CF)",
+          "value": "420 PV",
+          "delta": "スマホ 88%"
+        }
+      ],
+      "mermaid_template": "flowchart LR\n  A[\"80筋カルテ & 25校DB\\n(pt_student_portal)\"] --> B{\"8大防衛ゲート\"}\n  B -->|Exit Code 0| C[\"Cloudflare Pages\\n({{kpi_0}})\"]\n  C -->|\"{{kpi_1}}\"| D[\"AdSense / LINE導線\"]",
+      "governance": {
+        "dev_pattern": "本番8大防衛ゲート ＋ 14軸コールドスタート監査（portal-auditor）",
+        "dev_gates": [
+          {
+            "name": "本番8大防衛ゲート",
+            "rule": "ダミーURL検知・LINE短縮URL適合・AdSenseタグ検査"
+          },
+          {
+            "name": "全国25校クローラー v2.0",
+            "rule": "厚労省2024年10月給付金新基準（3年192万/4年256万）定期照合"
+          },
+          {
+            "name": "モバイル375px 実機E2E",
+            "rule": "赤シート暗記モード・アコーディオン展開のレイアウト崩れ検証"
+          }
+        ],
+        "ops_pattern": "Git Push 自動デプロイ ＋ 週次ポータル監査 ＋ 毎時CF集計",
+        "ops_routines": [
+          {
+            "trigger": "GitHub Push時 (自動)",
+            "action": "Cloudflare Pages へ即時ビルド＆本番デプロイ"
+          },
+          {
+            "trigger": "毎時 (GraphQL API)",
+            "action": "Cloudflare Web Analytics からUU・PV・流入元を自動取得"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "Cloudflare GraphQL (ALL_PASS_LIVE)",
+        "metrics": [
+          {
+            "name": "登録養成校",
+            "value": "25校 (22 HTTP OK)"
+          },
+          {
+            "name": "詳細筋カルテ",
+            "value": "80筋"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "サイト内回遊",
+            "views": "310 PV"
+          },
+          {
+            "title": "Direct / ブックマーク",
+            "views": "60 PV"
+          },
+          {
+            "title": "YouTube (Shorts導線)",
+            "views": "40 PV"
+          },
+          {
+            "title": "localhost",
+            "views": "10 PV"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mmt-game",
+      "name": "MMT Tactical Card Game",
+      "role": "手技・グレード暗記PWAアプリ",
+      "status": "v21稼働中",
+      "path": "projects/mmt_card_game",
+      "url": "https://kassii77763.github.io/daniels-mmt-card-game/",
+      "git": {
+        "sha": "cf2f047",
+        "last_commit_date": "2026-11-16"
+      },
+      "stack": [
+        "GitHub Pages",
+        "Vanilla JS",
+        "Web Speech API",
+        "PWA (Service Worker)"
+      ],
+      "harness": [
+        "180枚画像ゲート",
+        "音声被りゼロ検証",
+        "E2E実機幾何監査"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-07 10:51",
+        "phase": "YouTube Shorts Ver 2.0（PTポータル訴求 ＆ 3D座標追従 10本公開）",
+        "highlights": [
+          "YouTube Shorts Ver 2.0（PTポータル訴求 ＆ 3D座標追従 10本公開）",
+          "公開日時: 2026-11-07",
+          "動画仕様: 1080×1920 (9:16), 30fps, 8.50秒, H.264 / AAC",
+          "新基準の達成項目:"
+        ],
+        "next_actions": []
+      },
+      "north_star_kpis": [
+        {
+          "label": "配備カード数",
+          "value": "133 / 160枚",
+          "delta": "v21確定"
+        },
+        {
+          "label": "ハーネス合格率",
+          "value": "100% (180/180)",
+          "delta": "PWA稼働"
+        }
+      ],
+      "mermaid_template": "flowchart LR\n  A[\"手技データ & SW\\n(mmt_card_game)\"] --> B{\"3層ハーネス監査\"}\n  B -->|\"{{kpi_1}}\"| C[\"GitHub Pages v21\\n({{kpi_0}})\"]\n  C --> D[\"PWA スタンドアロン\"]",
+      "governance": {
+        "dev_pattern": "厳格3層ハーネス開発（構文・画像・実機E2Eの3層全通過時のみ公開）",
+        "dev_gates": [
+          {
+            "name": "第2層 画像品質ゲート",
+            "rule": "180枚の手技画像の欠損・解像度・ラベル整合を全数検査"
+          },
+          {
+            "name": "Web Speech 音声制御ゲート",
+            "rule": "850ms静寂ポーズ制御による読み札の音声被り・語尾切れ根絶"
+          },
+          {
+            "name": "PWA キャッシュ整合ゲート",
+            "rule": "Network First (コード) + Cache First (手技画像) の正常動作検証"
+          }
+        ],
+        "ops_pattern": "静的PWA配信（サーバーレス・GitHub Pagesホスティング）",
+        "ops_routines": [
+          {
+            "trigger": "v21リリース完了済",
+            "action": "GitHub Pages 上でスタンドアロンPWAとして常時配信"
+          },
+          {
+            "trigger": "フィードバック発生時",
+            "action": "PROGRESS.md / 次期改修へ起票し3層ハーネス再検証"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "GitHub Pages / PWA",
+        "metrics": [
+          {
+            "name": "ビルドバージョン",
+            "value": "v21"
+          },
+          {
+            "name": "キャッシュ戦略",
+            "value": "Network First"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "上肢・体幹グレード判定モード",
+            "views": "配備済"
+          },
+          {
+            "title": "カルタ音声読み上げエンジン",
+            "views": "配備済"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pt-stats",
+      "name": "PT統計動画ファクトリー",
+      "role": "国試・統計解説動画の自律量産",
+      "status": "パイロット検証中",
+      "path": "projects/pt_stats_video_factory",
+      "url": "#",
+      "git": {
+        "sha": "-",
+        "last_commit_date": "-"
+      },
+      "stack": [
+        "Python",
+        "Remotion / MoviePy",
+        "12-Gate Evaluator",
+        "AI Auditor"
+      ],
+      "harness": [
+        "決定論12ゲート",
+        "コールドスタートAI審判",
+        "WIP=1 差戻し制御"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-12 10:36",
+        "phase": "【5-4】標準誤差（SE）＝平均値の品質保証書！SDとの違いと計算トレース (98/100 PASS)",
+        "highlights": [
+          "【5-4】標準誤差（SE）＝平均値の品質保証書！SDとの違いと計算トレース (98/100 PASS)",
+          "【1-2】度数分布表とヒストグラム！200人データの集計トレース (96/100 PASS)",
+          "【2-4】標準偏差（SD）！血圧10人のバラバラ度メーター (97/100 PASS)"
+        ],
+        "next_actions": [
+          "4-6: 【4-6】ROC曲線とAUCの正体（感度・1-特異度階段プロット、面積合計 0.8821875 → AUC = 0.88）",
+          "6-3: 【6-3】68-95-99.7の法則！1.96と2.58の魔法の数字",
+          "7-1: 【7-1】中心極限定理の威力！どんな母集団でも標本平均は正規分布に化ける",
+          "2-2 / 5-2 / 5-3 / 5-5 / 6-4 / 7-4 / 8-4: 各回の最重要計算トレース単元"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "ハーネス完遂動画",
+          "value": "47 / 50本",
+          "delta": "REJECT 3件"
+        },
+        {
+          "label": "AI審判平均スコア",
+          "value": "計測中",
+          "delta": "12ゲート監査"
+        }
+      ],
+      "mermaid_template": "flowchart LR\n  A[\"50本カリキュラム\\n(pt_stats_video_factory)\"] --> B{\"12決定論ゲート\"}\n  B -->|PASS| C{\"コールドスタートAI審判\"}\n  C -->|\"{{kpi_1}}\"| D[\"完パケ動画\\n({{kpi_0}})\"]",
+      "governance": {
+        "dev_pattern": "WIP=1 閉ループ動画ハーネス（12決定論ゲート ＋ 独立AI審判）",
+        "dev_gates": [
+          {
+            "name": "決定論的12ゲート評価",
+            "rule": "音声同期・字幕レイアウト・数値トレース一致を自動機械判定"
+          },
+          {
+            "name": "コールドスタートAI審判",
+            "rule": "5軸＋6枚の抜き打ち画像から95点以上を合格とする独立監査"
+          },
+          {
+            "name": "WIP=1 差し戻しループ",
+            "rule": "不合格ノードのみを自動特定して再生成へ差し戻し"
+          }
+        ],
+        "ops_pattern": "単元別バッチ生産（1本ずつ完全合格させて次単元へ進行）",
+        "ops_routines": [
+          {
+            "trigger": "単元制作時 (手動起動)",
+            "action": "run_video_harness.py で生成→12ゲート→AI審判を一気通貫実行"
+          },
+          {
+            "trigger": "合格後",
+            "action": "PROGRESS.md と report_*.json に公証レポートを自動記録"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "Local Harness Reports",
+        "metrics": [
+          {
+            "name": "決定論ゲート",
+            "value": "12/12 PASS"
+          },
+          {
+            "name": "対象カリキュラム",
+            "value": "50本"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "【5-4】標準誤差（SE）＝平均値の品質保証書",
+            "views": "98/100 PASS"
+          },
+          {
+            "title": "【1-2】度数分布表とヒストグラム",
+            "views": "96/100 PASS"
+          },
+          {
+            "title": "【2-4】標準偏差（SD）！血圧10人データ",
+            "views": "97/100 PASS"
+          }
+        ]
+      }
+    },
+    {
+      "id": "line-bot",
+      "name": "立腰体操 LINE Bot・教材",
+      "role": "セルフケア指導・コミュニティ",
+      "status": "計画的保留",
+      "path": "projects/line_bot_proposal",
+      "url": "#",
+      "git": {
+        "sha": "-",
+        "last_commit_date": "-"
+      },
+      "stack": [
+        "LINE Messaging API",
+        "GAS",
+        "Instagram Reels"
+      ],
+      "harness": [
+        "Webhook疎通検証",
+        "Flex Message構文検証"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-03 15:45",
+        "phase": "Phase 0: コンセプト設計・構想段階（リソース集中のため計画的保留）",
+        "highlights": [],
+        "next_actions": [
+          "PTポータル（80筋ドリル＋LINE誘導）とShorts初期10本投稿が完了するまで完全待機"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "現在フェーズ",
+          "value": "Phase 0",
+          "delta": "構想・待機"
+        },
+        {
+          "label": "起動条件",
+          "value": "PT導線確立後",
+          "delta": "リソース集中"
+        }
+      ],
+      "mermaid_template": "flowchart LR\n  A[\"Instagram リール\"] --> B[\"立腰公式LINE\\n({{kpi_0}})\"]\n  B --> C[\"GAS Webhook応答\"]\n  C --> D[\"体操解説・教室案内\"]",
+      "governance": {
+        "dev_pattern": "GAS Webhook イベント駆動開発（軽量サーバーレス構成）",
+        "dev_gates": [
+          {
+            "name": "Webhook 200 OK 疎通検証",
+            "rule": "LINE Messaging API からのPOSTに対する即時応答担保"
+          },
+          {
+            "name": "Flex Message JSON検証",
+            "rule": "カルーセル・動画リンクカードの表示崩れ防止"
+          }
+        ],
+        "ops_pattern": "自動応答 ＋ 対面教室連動（PT導線確立後に本格始動）",
+        "ops_routines": [
+          {
+            "trigger": "着手条件達成時",
+            "action": "PTポータル・Shorts初期10本導線の安定稼働後に再開"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "LINE Bot Proposal",
+        "metrics": [
+          {
+            "name": "稼働状態",
+            "value": "計画的保留"
+          },
+          {
+            "name": "優先順位",
+            "value": "PT事業安定後"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "基本設計・提案書 (line_bot_proposal)",
+            "views": "準備完了"
+          }
+        ]
+      }
+    }
+  ]
+}
