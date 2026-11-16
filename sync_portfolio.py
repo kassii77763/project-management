@@ -178,6 +178,76 @@ def parse_progress_md(proj_dir):
     return result
 
 
+def parse_agents_md_tags(proj_dir, default_stack, default_harness):
+    """AGENTS.md の明示的マーカーから stack と harness を厳密に分離抽出する"""
+    md_path = os.path.join(proj_dir, "AGENTS.md")
+    if not os.path.exists(md_path):
+        return default_stack, default_harness
+
+    with open(md_path, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    def _extract_block(start_tag, end_tag):
+        m = re.search(rf"{re.escape(start_tag)}(.*?){re.escape(end_tag)}", text, re.DOTALL)
+        if not m:
+            return []
+        items = []
+        for ln in m.group(1).strip().splitlines():
+            ln = ln.strip()
+            if ln.startswith("- ") or ln.startswith("* "):
+                items.append(ln[2:].strip())
+        return items
+
+    stack = _extract_block("<!-- STACK_LIST_START -->", "<!-- STACK_LIST_END -->")
+    harness = _extract_block("<!-- HARNESS_LIST_START -->", "<!-- HARNESS_LIST_END -->")
+    return (stack if stack else default_stack), (harness if harness else default_harness)
+
+
+def scan_actual_harness_scripts(proj_dir):
+    """プロジェクト内の実在する検証・監査スクリプトを走査する"""
+    found = []
+    for sub in ["harness", "tests", "scripts"]:
+        target_dir = os.path.join(proj_dir, sub)
+        if not os.path.exists(target_dir):
+            continue
+        for fname in sorted(os.listdir(target_dir)):
+            if not (fname.endswith(".py") or fname.endswith(".js")):
+                continue
+            if any(k in fname.lower() for k in ["harness", "gate", "verify", "audit", "critic", "regression", "crawl"]):
+                found.append(f"{sub}/{fname}")
+    return found
+
+
+def scan_actual_workflows(proj_dir):
+    """実在する .github/workflows/*.yml とトリガー定義を走査する"""
+    wf_dir = os.path.join(proj_dir, ".github", "workflows")
+    workflows = []
+    if not os.path.exists(wf_dir):
+        return workflows
+    for fname in sorted(os.listdir(wf_dir)):
+        if not (fname.endswith(".yml") or fname.endswith(".yaml")):
+            continue
+        fpath = os.path.join(wf_dir, fname)
+        triggers = []
+        try:
+            with open(fpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            if "cron:" in content:
+                crons = re.findall(r"cron:\s*['\"]([^'\"]+)['\"]", content)
+                triggers.append(f"cron: {', '.join(crons)}")
+            if re.search(r"^\s*push:", content, re.MULTILINE):
+                triggers.append("push")
+            if "workflow_dispatch" in content:
+                triggers.append("manual")
+        except Exception:
+            pass
+        workflows.append({
+            "file": f".github/workflows/{fname}",
+            "triggers": ", ".join(triggers) if triggers else "configured"
+        })
+    return workflows
+
+
 def fetch_cloudflare_analytics(env_keys):
     """Cloudflare Pages (pt-student-portal) Web Analytics 本番連携"""
     api_token = env_keys.get("CLOUDFLARE_API_TOKEN", "")
@@ -424,6 +494,41 @@ def scan_stats_factory_metrics():
     }
 
 
+def build_dynamic_governance(proj_dir, harness_items, dev_pattern, ops_pattern, extra_routines):
+    """実在の検証スクリプト・GitHub Actions・Task Schedulerを走査してTab 3データを構築"""
+    scripts = scan_actual_harness_scripts(proj_dir)
+    workflows = scan_actual_workflows(proj_dir)
+
+    dev_gates = []
+    for idx, h_label in enumerate(harness_items[:4]):
+        matched_script = scripts[idx] if idx < len(scripts) else (scripts[0] if scripts else "未実装（設計中）")
+        dev_gates.append({
+            "name": h_label,
+            "rule": f"実在スクリプト: {matched_script}" if scripts else "スクリプト未配備（導入予定）"
+        })
+    if len(scripts) > 4:
+        dev_gates.append({
+            "name": f"その他検証スクリプト（計{len(scripts)}本）",
+            "rule": ", ".join(scripts[4:8]) + (" ..." if len(scripts) > 8 else "")
+        })
+
+    ops_routines = []
+    for wf in workflows:
+        ops_routines.append({
+            "trigger": f"GitHub Actions ({wf['triggers']})",
+            "action": wf["file"]
+        })
+    for r in extra_routines:
+        ops_routines.append(r)
+
+    return {
+        "dev_pattern": dev_pattern,
+        "dev_gates": dev_gates,
+        "ops_pattern": ops_pattern,
+        "ops_routines": ops_routines
+    }
+
+
 def build_portfolio():
     now_dt = datetime.now(JST)
     time_label = now_dt.strftime("%Y-%m-%d %H:%M JST")
@@ -441,6 +546,32 @@ def build_portfolio():
             if os.path.isdir(os.path.join(ARCHIVE_DIR, name))
         )
 
+    yt_stack, yt_harness = parse_agents_md_tags(
+        YT_DIR,
+        ["Python", "Blender / Z-Anatomy", "FFmpeg", "YouTube Data API v3"],
+        ["OpenCV・FFmpeg定量ゲート (harness/deterministic_gate.py)"]
+    )
+    pt_stack, pt_harness = parse_agents_md_tags(
+        PT_DIR,
+        ["Cloudflare Pages", "Cloudflare Analytics API", "Vanilla JS / HTML"],
+        ["本番8大防衛ゲート (harness/verify_production_readiness.js)"]
+    )
+    mmt_stack, mmt_harness = parse_agents_md_tags(
+        MMT_DIR,
+        ["GitHub Pages", "Vanilla JS / HTML", "Web Speech API", "PWA"],
+        ["180枚手技画像品質ゲート (harness/image_quality_gate.py)"]
+    )
+    stats_stack, stats_harness = parse_agents_md_tags(
+        STATS_DIR,
+        ["Python", "Manim", "FFmpeg", "TTS音声合成"],
+        ["統合動画ハーネス (harness/run_video_harness.py)"]
+    )
+    line_stack, line_harness = parse_agents_md_tags(
+        LINE_DIR,
+        ["LINE Messaging API", "GAS", "Instagram Reels"],
+        ["Webhook疎通テスト (導入予定)"]
+    )
+
     projects = [
         {
             "id": "youtube-shorts",
@@ -450,33 +581,36 @@ def build_portfolio():
             "path": "projects/youtube_visual_library",
             "url": "https://www.youtube.com/channel/UCZ1AqHX59h7UCsCkIgHINrQ",
             "git": get_git_info(YT_DIR),
-            "stack": ["Python", "Blender / Z-Anatomy", "YouTube Data API", "Playwright"],
-            "harness": ["OpenCV画像ゲート", "6大定量評価関数", "セーフゾーン検査"],
+            "stack": yt_stack,
+            "harness": yt_harness,
             "progress": parse_progress_md(YT_DIR),
             "north_star_kpis": [
                 {"label": "YouTube 総再生数", "value": f"{yt['total_views']:,}回", "delta": f"{yt['videos_count']}本公開"},
                 {"label": "チャンネル登録者", "value": yt["subscribers"], "delta": f"高評価 {yt['total_likes']}"}
             ],
             "mermaid_template": (
-                "flowchart LR\n"
-                "  A[\"Z-Anatomy 3D素材\\n(youtube_visual_library)\"] --> B{\"6軸定量ハーネス\"}\n"
-                "  B -->|1080x1920 PASS| C[\"YouTube Shorts\\n({{kpi_0}})\"]\n"
-                "  C -->|固定コメント導線| D[\"PT学生学習帖\\n(Webポータル)\"]\n"
-                "  C -->|LINE誘導| E[\"公式LINE\"]"
+                "flowchart TD\n"
+                "  A[\"Z-Anatomy 3D素材 & 動画生成\"] --> G\n"
+                "  subgraph G[\"並列品質ゲート (run_shorts_harness.py)\"]\n"
+                "    B[\"deterministic_gate.py (OpenCV/FFmpeg)\"]\n"
+                "    C[\"run_regression_tests.js (セーフゾーン)\"]\n"
+                "  end\n"
+                "  B -.->|\"FAIL 差し戻し\"| A\n"
+                "  C -.->|\"FAIL 差し戻し\"| A\n"
+                "  G -->|\"ALL PASS\"| D[\"YouTube Shorts\\n({{kpi_0}})\"]\n"
+                "  D --> E[\"PT学生学習帖 (Web)\"]\n"
+                "  D --> F[\"公式LINE 導線\"]"
             ),
-            "governance": {
-                "dev_pattern": "決定論的6軸動画ゲート ＋ Z-Anatomy 3D座標追従パイプライン",
-                "dev_gates": [
-                    {"name": "OpenCV 画像品質ゲート", "rule": "解像度・フレーム欠損・黒画面の機械的ゼロ検査"},
-                    {"name": "YouTube セーフゾーン検査", "rule": "X=70〜890, Y=200〜1480 へのUI格納と文字切れ防止"},
-                    {"name": "音声分離タイムライン制御", "rule": "出題・思考・正解・告知の無音区間分離による音声被り根絶"}
-                ],
-                "ops_pattern": "半自動パイプライン（ローカル検証・アップロード → 毎時API自動同期）",
-                "ops_routines": [
-                    {"trigger": "動画制作時 (手動実行)", "action": "run_shorts_harness.py による自動録画・品質監査"},
-                    {"trigger": "毎時 (Task Scheduler)", "action": "YouTube Data API v3 から全動画再生数・高評価数を自動取得"}
+            "governance": build_dynamic_governance(
+                YT_DIR,
+                yt_harness,
+                "6軸定量ゲート ＋ リグレッション並列検証 (run_shorts_harness.py)",
+                "Task Scheduler 毎時API同期 ＋ 手動バッチ公開",
+                [
+                    {"trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)", "action": "毎時 YouTube Data API v3 から再生数・高評価を自動取得"},
+                    {"trigger": "動画制作時 (手動CLI実行)", "action": "python harness/run_shorts_harness.py 実行 → 合格動画のみ公開"}
                 ]
-            },
+            ),
             "analytics_detail": {
                 "source": "YouTube Data API v3" if yt["api_connected"] else "YouTube API (未接続)",
                 "metrics": [
@@ -494,32 +628,36 @@ def build_portfolio():
             "path": "projects/pt_student_portal",
             "url": "https://pt-student-portal.pages.dev",
             "git": get_git_info(PT_DIR),
-            "stack": ["Cloudflare Pages", "Cloudflare Analytics API", "Vanilla JS", "Google AdSense"],
-            "harness": ["14軸ポータル監査", "本番8大防衛ゲート", "25校クローラーv2"],
+            "stack": pt_stack,
+            "harness": pt_harness,
             "progress": parse_progress_md(PT_DIR),
             "north_star_kpis": [
                 {"label": "ユニーク訪問 (CF)", "value": f"{cf['uu']:,}人", "delta": f"深度 {cf['depth']} PV/人"},
                 {"label": "ページビュー (CF)", "value": f"{cf['pv']:,} PV", "delta": f"スマホ {cf['mobile_pct']}%"}
             ],
             "mermaid_template": (
-                "flowchart LR\n"
-                "  A[\"80筋カルテ & 25校DB\\n(pt_student_portal)\"] --> B{\"8大防衛ゲート\"}\n"
-                "  B -->|Exit Code 0| C[\"Cloudflare Pages\\n({{kpi_0}})\"]\n"
-                "  C -->|\"{{kpi_1}}\"| D[\"AdSense / LINE導線\"]"
+                "flowchart TD\n"
+                "  DB[\"25校DB / 80筋カルテ\"] <-->|\"双方向同期\"| CR[\"crawl_and_verify_schools.py\"]\n"
+                "  DB --> G\n"
+                "  subgraph G[\"並列防衛ゲート\"]\n"
+                "    H1[\"verify_production_readiness.js\"]\n"
+                "    H2[\"verify_mobile_bento_grid.js\"]\n"
+                "  end\n"
+                "  H1 -.->|\"FAIL 差し戻し\"| DB\n"
+                "  H2 -.->|\"FAIL 差し戻し\"| DB\n"
+                "  G -->|\"Exit Code 0\"| CF[\"Cloudflare Pages\\n({{kpi_0}})\"]\n"
+                "  CF <-->|\"{{kpi_1}}\"| AN[\"CF Analytics / AdSense\"]"
             ),
-            "governance": {
-                "dev_pattern": "本番8大防衛ゲート ＋ 14軸コールドスタート監査（portal-auditor）",
-                "dev_gates": [
-                    {"name": "本番8大防衛ゲート", "rule": "ダミーURL検知・LINE短縮URL適合・AdSenseタグ検査"},
-                    {"name": "全国25校クローラー v2.0", "rule": "厚労省2024年10月給付金新基準（3年192万/4年256万）定期照合"},
-                    {"name": "モバイル375px 実機E2E", "rule": "赤シート暗記モード・アコーディオン展開のレイアウト崩れ検証"}
-                ],
-                "ops_pattern": "Git Push 自動デプロイ ＋ 週次ポータル監査 ＋ 毎時CF集計",
-                "ops_routines": [
-                    {"trigger": "GitHub Push時 (自動)", "action": "Cloudflare Pages へ即時ビルド＆本番デプロイ"},
-                    {"trigger": "毎時 (GraphQL API)", "action": "Cloudflare Web Analytics からUU・PV・流入元を自動取得"}
+            "governance": build_dynamic_governance(
+                PT_DIR,
+                pt_harness,
+                "本番8大防衛ゲート ＋ 14軸監査 ＋ 25校クローラー実測",
+                "GitHub Actions 自動パイプライン ＋ Cloudflare Pages 即時反映 ＋ Task Scheduler",
+                [
+                    {"trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)", "action": "毎時 Cloudflare GraphQL API からUU・PV・流入元を自動取得"},
+                    {"trigger": "Git Push (main)", "action": "Cloudflare Pages へ自動ビルド＆本番反映"}
                 ]
-            },
+            ),
             "analytics_detail": {
                 "source": f"Cloudflare GraphQL ({cf['api_status']})",
                 "metrics": [
@@ -537,32 +675,35 @@ def build_portfolio():
             "path": "projects/mmt_card_game",
             "url": "https://kassii77763.github.io/daniels-mmt-card-game/",
             "git": get_git_info(MMT_DIR),
-            "stack": ["GitHub Pages", "Vanilla JS", "Web Speech API", "PWA (Service Worker)"],
-            "harness": ["180枚画像ゲート", "音声被りゼロ検証", "E2E実機幾何監査"],
+            "stack": mmt_stack,
+            "harness": mmt_harness,
             "progress": parse_progress_md(MMT_DIR),
             "north_star_kpis": [
                 {"label": "配備カード数", "value": "133 / 160枚", "delta": "v21確定"},
                 {"label": "ハーネス合格率", "value": "100% (180/180)", "delta": "PWA稼働"}
             ],
             "mermaid_template": (
-                "flowchart LR\n"
-                "  A[\"手技データ & SW\\n(mmt_card_game)\"] --> B{\"3層ハーネス監査\"}\n"
-                "  B -->|\"{{kpi_1}}\"| C[\"GitHub Pages v21\\n({{kpi_0}})\"]\n"
-                "  C --> D[\"PWA スタンドアロン\"]"
+                "flowchart TD\n"
+                "  S[\"手技データ & Service Worker\"] --> G\n"
+                "  subgraph G[\"3層並列ハーネス\"]\n"
+                "    G1[\"image_quality_gate.py\"]\n"
+                "    G2[\"visual_geometric_harness.js\"]\n"
+                "    G3[\"critic_auditor.js\"]\n"
+                "  end\n"
+                "  G1 -.->|\"FAIL 差し戻し\"| S\n"
+                "  G2 -.->|\"FAIL 差し戻し\"| S\n"
+                "  G -->|\"{{kpi_1}}\"| P[\"GitHub Pages v21\\n({{kpi_0}})\"]\n"
+                "  P <-->|\"Network/Cache First\"| U[\"PWA スタンドアロン\"]"
             ),
-            "governance": {
-                "dev_pattern": "厳格3層ハーネス開発（構文・画像・実機E2Eの3層全通過時のみ公開）",
-                "dev_gates": [
-                    {"name": "第2層 画像品質ゲート", "rule": "180枚の手技画像の欠損・解像度・ラベル整合を全数検査"},
-                    {"name": "Web Speech 音声制御ゲート", "rule": "850ms静寂ポーズ制御による読み札の音声被り・語尾切れ根絶"},
-                    {"name": "PWA キャッシュ整合ゲート", "rule": "Network First (コード) + Cache First (手技画像) の正常動作検証"}
-                ],
-                "ops_pattern": "静的PWA配信（サーバーレス・GitHub Pagesホスティング）",
-                "ops_routines": [
-                    {"trigger": "v21リリース完了済", "action": "GitHub Pages 上でスタンドアロンPWAとして常時配信"},
-                    {"trigger": "フィードバック発生時", "action": "PROGRESS.md / 次期改修へ起票し3層ハーネス再検証"}
+            "governance": build_dynamic_governance(
+                MMT_DIR,
+                mmt_harness,
+                "3層並列ハーネス（画像品質・幾何レイアウト・臨床監査）",
+                "GitHub Actions Pages 自動デプロイ（静的PWA配信）",
+                [
+                    {"trigger": "PWA常時配信 (v21確定)", "action": "sw.js (Network First / Cache First) によるオフライン両立配信"}
                 ]
-            },
+            ),
             "analytics_detail": {
                 "source": "GitHub Pages / PWA",
                 "metrics": [
@@ -583,32 +724,31 @@ def build_portfolio():
             "path": "projects/pt_stats_video_factory",
             "url": "#",
             "git": get_git_info(STATS_DIR),
-            "stack": ["Python", "Remotion / MoviePy", "12-Gate Evaluator", "AI Auditor"],
-            "harness": ["決定論12ゲート", "コールドスタートAI審判", "WIP=1 差戻し制御"],
+            "stack": stats_stack,
+            "harness": stats_harness,
             "progress": parse_progress_md(STATS_DIR),
             "north_star_kpis": [
                 {"label": "ハーネス完遂動画", "value": f"{stats_m['passed_count']} / {stats_m['total_target']}本", "delta": f"REJECT {stats_m['rejected_count']}件"},
                 {"label": "AI審判平均スコア", "value": f"{stats_m['avg_score']} / 100点" if stats_m['avg_score'] else "計測中", "delta": "12ゲート監査"}
             ],
             "mermaid_template": (
-                "flowchart LR\n"
-                "  A[\"50本カリキュラム\\n(pt_stats_video_factory)\"] --> B{\"12決定論ゲート\"}\n"
-                "  B -->|PASS| C{\"コールドスタートAI審判\"}\n"
-                "  C -->|\"{{kpi_1}}\"| D[\"完パケ動画\\n({{kpi_0}})\"]"
+                "flowchart TD\n"
+                "  C[\"50本カリキュラム (WIP=1)\"] --> D[\"deterministic_evaluator.py (12ゲート)\"]\n"
+                "  D -.->|\"FAIL 差し戻し\"| C\n"
+                "  D -->|\"12/12 PASS\"| J[\"コールドスタートAI審判 (5軸+6画像)\"]\n"
+                "  J -.->|\"REJECT 差し戻し\"| C\n"
+                "  J -->|\"{{kpi_1}}\"| O[\"完パケ動画 & レポート\\n({{kpi_0}})\"]"
             ),
-            "governance": {
-                "dev_pattern": "WIP=1 閉ループ動画ハーネス（12決定論ゲート ＋ 独立AI審判）",
-                "dev_gates": [
-                    {"name": "決定論的12ゲート評価", "rule": "音声同期・字幕レイアウト・数値トレース一致を自動機械判定"},
-                    {"name": "コールドスタートAI審判", "rule": "5軸＋6枚の抜き打ち画像から95点以上を合格とする独立監査"},
-                    {"name": "WIP=1 差し戻しループ", "rule": "不合格ノードのみを自動特定して再生成へ差し戻し"}
-                ],
-                "ops_pattern": "単元別バッチ生産（1本ずつ完全合格させて次単元へ進行）",
-                "ops_routines": [
-                    {"trigger": "単元制作時 (手動起動)", "action": "run_video_harness.py で生成→12ゲート→AI審判を一気通貫実行"},
-                    {"trigger": "合格後", "action": "PROGRESS.md と report_*.json に公証レポートを自動記録"}
+            "governance": build_dynamic_governance(
+                STATS_DIR,
+                stats_harness,
+                "WIP=1 閉ループ動画ハーネス（12決定論ゲート ＋ AI審判）",
+                "単元別ローカル実行（harness/run_video_harness.py）",
+                [
+                    {"trigger": "単元制作時 (手動CLI実行)", "action": "python harness/run_video_harness.py で生成・監査・report_*.json 出力"},
+                    {"trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)", "action": "毎時 report_*.json の PASS/REJECT 件数と平均点を集計"}
                 ]
-            },
+            ),
             "analytics_detail": {
                 "source": "Local Harness Reports",
                 "metrics": [
@@ -626,8 +766,8 @@ def build_portfolio():
             "path": "projects/line_bot_proposal",
             "url": "#",
             "git": get_git_info(LINE_DIR),
-            "stack": ["LINE Messaging API", "GAS", "Instagram Reels"],
-            "harness": ["Webhook疎通検証", "Flex Message構文検証"],
+            "stack": line_stack,
+            "harness": line_harness,
             "progress": parse_progress_md(LINE_DIR),
             "north_star_kpis": [
                 {"label": "現在フェーズ", "value": "Phase 0", "delta": "構想・待機"},
@@ -635,21 +775,19 @@ def build_portfolio():
             ],
             "mermaid_template": (
                 "flowchart LR\n"
-                "  A[\"Instagram リール\"] --> B[\"立腰公式LINE\\n({{kpi_0}})\"]\n"
-                "  B --> C[\"GAS Webhook応答\"]\n"
-                "  C --> D[\"体操解説・教室案内\"]"
+                "  IG[\"Instagram リール\"] --> L[\"立腰公式LINE\\n({{kpi_0}})\"]\n"
+                "  L <-->|\"Webhook 双方向応答\"| GAS[\"GAS サーバーレス\"]\n"
+                "  GAS --> R[\"体操解説・教室予約導線\"]"
             ),
-            "governance": {
-                "dev_pattern": "GAS Webhook イベント駆動開発（軽量サーバーレス構成）",
-                "dev_gates": [
-                    {"name": "Webhook 200 OK 疎通検証", "rule": "LINE Messaging API からのPOSTに対する即時応答担保"},
-                    {"name": "Flex Message JSON検証", "rule": "カルーセル・動画リンクカードの表示崩れ防止"}
-                ],
-                "ops_pattern": "自動応答 ＋ 対面教室連動（PT導線確立後に本格始動）",
-                "ops_routines": [
-                    {"trigger": "着手条件達成時", "action": "PTポータル・Shorts初期10本導線の安定稼働後に再開"}
+            "governance": build_dynamic_governance(
+                LINE_DIR,
+                line_harness,
+                "構想段階（PTポータル＆Shorts導線確立後に着手）",
+                "計画的保留（自動実行スケジュール未設定）",
+                [
+                    {"trigger": "着手条件達成時 (手動再開)", "action": "PTポータル・Shorts初期10本安定後に GAS Webhook 実装開始"}
                 ]
-            },
+            ),
             "analytics_detail": {
                 "source": "LINE Bot Proposal",
                 "metrics": [

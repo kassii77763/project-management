@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 14:31 JST",
+    "last_sync": "2026-11-16 14:44 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -20,13 +20,14 @@
       "stack": [
         "Python",
         "Blender / Z-Anatomy",
-        "YouTube Data API",
-        "Playwright"
+        "FFmpeg",
+        "YouTube Data API v3",
+        "Playwright (録画)"
       ],
       "harness": [
-        "OpenCV画像ゲート",
-        "6大定量評価関数",
-        "セーフゾーン検査"
+        "OpenCV・FFmpeg定量ゲート (harness/deterministic_gate.py)",
+        "6軸品質統合オーケストレーター (harness/run_shorts_harness.py)",
+        "リグレッションテスト (tests/run_regression_tests.js)"
       ],
       "progress": {
         "exists": true,
@@ -41,7 +42,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,609回",
+          "value": "22,668回",
           "delta": "34本公開"
         },
         {
@@ -50,32 +51,32 @@
           "delta": "高評価 73"
         }
       ],
-      "mermaid_template": "flowchart LR\n  A[\"Z-Anatomy 3D素材\\n(youtube_visual_library)\"] --> B{\"6軸定量ハーネス\"}\n  B -->|1080x1920 PASS| C[\"YouTube Shorts\\n({{kpi_0}})\"]\n  C -->|固定コメント導線| D[\"PT学生学習帖\\n(Webポータル)\"]\n  C -->|LINE誘導| E[\"公式LINE\"]",
+      "mermaid_template": "flowchart TD\n  A[\"Z-Anatomy 3D素材 & 動画生成\"] --> G\n  subgraph G[\"並列品質ゲート (run_shorts_harness.py)\"]\n    B[\"deterministic_gate.py (OpenCV/FFmpeg)\"]\n    C[\"run_regression_tests.js (セーフゾーン)\"]\n  end\n  B -.->|\"FAIL 差し戻し\"| A\n  C -.->|\"FAIL 差し戻し\"| A\n  G -->|\"ALL PASS\"| D[\"YouTube Shorts\\n({{kpi_0}})\"]\n  D --> E[\"PT学生学習帖 (Web)\"]\n  D --> F[\"公式LINE 導線\"]",
       "governance": {
-        "dev_pattern": "決定論的6軸動画ゲート ＋ Z-Anatomy 3D座標追従パイプライン",
+        "dev_pattern": "6軸定量ゲート ＋ リグレッション並列検証 (run_shorts_harness.py)",
         "dev_gates": [
           {
-            "name": "OpenCV 画像品質ゲート",
-            "rule": "解像度・フレーム欠損・黒画面の機械的ゼロ検査"
+            "name": "OpenCV・FFmpeg定量ゲート (harness/deterministic_gate.py)",
+            "rule": "実在スクリプト: harness/deterministic_gate.py"
           },
           {
-            "name": "YouTube セーフゾーン検査",
-            "rule": "X=70〜890, Y=200〜1480 へのUI格納と文字切れ防止"
+            "name": "6軸品質統合オーケストレーター (harness/run_shorts_harness.py)",
+            "rule": "実在スクリプト: harness/run_shorts_harness.py"
           },
           {
-            "name": "音声分離タイムライン制御",
-            "rule": "出題・思考・正解・告知の無音区間分離による音声被り根絶"
+            "name": "リグレッションテスト (tests/run_regression_tests.js)",
+            "rule": "実在スクリプト: tests/run_regression_tests.js"
           }
         ],
-        "ops_pattern": "半自動パイプライン（ローカル検証・アップロード → 毎時API自動同期）",
+        "ops_pattern": "Task Scheduler 毎時API同期 ＋ 手動バッチ公開",
         "ops_routines": [
           {
-            "trigger": "動画制作時 (手動実行)",
-            "action": "run_shorts_harness.py による自動録画・品質監査"
+            "trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)",
+            "action": "毎時 YouTube Data API v3 から再生数・高評価を自動取得"
           },
           {
-            "trigger": "毎時 (Task Scheduler)",
-            "action": "YouTube Data API v3 から全動画再生数・高評価数を自動取得"
+            "trigger": "動画制作時 (手動CLI実行)",
+            "action": "python harness/run_shorts_harness.py 実行 → 合格動画のみ公開"
           }
         ]
       },
@@ -125,13 +126,16 @@
       "stack": [
         "Cloudflare Pages",
         "Cloudflare Analytics API",
-        "Vanilla JS",
-        "Google AdSense"
+        "Vanilla JS / HTML",
+        "Google AdSense",
+        "LINE Messaging API"
       ],
       "harness": [
-        "14軸ポータル監査",
-        "本番8大防衛ゲート",
-        "25校クローラーv2"
+        "本番8大防衛ゲート (harness/verify_production_readiness.js)",
+        "14軸ポータル監査 (harness/critic-auditor.js)",
+        "モバイル375px幾何検証 (harness/verify_mobile_bento_grid.js)",
+        "25校クローラー監査 (scripts/crawl_and_verify_schools.py)",
+        "Tier1赤シートE2E (harness/verify_tier1_red_sheet_mmt.js)"
       ],
       "progress": {
         "exists": true,
@@ -162,32 +166,48 @@
           "delta": "スマホ 88%"
         }
       ],
-      "mermaid_template": "flowchart LR\n  A[\"80筋カルテ & 25校DB\\n(pt_student_portal)\"] --> B{\"8大防衛ゲート\"}\n  B -->|Exit Code 0| C[\"Cloudflare Pages\\n({{kpi_0}})\"]\n  C -->|\"{{kpi_1}}\"| D[\"AdSense / LINE導線\"]",
+      "mermaid_template": "flowchart TD\n  DB[\"25校DB / 80筋カルテ\"] <-->|\"双方向同期\"| CR[\"crawl_and_verify_schools.py\"]\n  DB --> G\n  subgraph G[\"並列防衛ゲート\"]\n    H1[\"verify_production_readiness.js\"]\n    H2[\"verify_mobile_bento_grid.js\"]\n  end\n  H1 -.->|\"FAIL 差し戻し\"| DB\n  H2 -.->|\"FAIL 差し戻し\"| DB\n  G -->|\"Exit Code 0\"| CF[\"Cloudflare Pages\\n({{kpi_0}})\"]\n  CF <-->|\"{{kpi_1}}\"| AN[\"CF Analytics / AdSense\"]",
       "governance": {
-        "dev_pattern": "本番8大防衛ゲート ＋ 14軸コールドスタート監査（portal-auditor）",
+        "dev_pattern": "本番8大防衛ゲート ＋ 14軸監査 ＋ 25校クローラー実測",
         "dev_gates": [
           {
-            "name": "本番8大防衛ゲート",
-            "rule": "ダミーURL検知・LINE短縮URL適合・AdSenseタグ検査"
+            "name": "本番8大防衛ゲート (harness/verify_production_readiness.js)",
+            "rule": "実在スクリプト: harness/area7-qa-gate.js"
           },
           {
-            "name": "全国25校クローラー v2.0",
-            "rule": "厚労省2024年10月給付金新基準（3年192万/4年256万）定期照合"
+            "name": "14軸ポータル監査 (harness/critic-auditor.js)",
+            "rule": "実在スクリプト: harness/critic-auditor.js"
           },
           {
-            "name": "モバイル375px 実機E2E",
-            "rule": "赤シート暗記モード・アコーディオン展開のレイアウト崩れ検証"
+            "name": "モバイル375px幾何検証 (harness/verify_mobile_bento_grid.js)",
+            "rule": "実在スクリプト: harness/dashboard-auditor.js"
+          },
+          {
+            "name": "25校クローラー監査 (scripts/crawl_and_verify_schools.py)",
+            "rule": "実在スクリプト: harness/harness2-portal-adapter.js"
+          },
+          {
+            "name": "その他検証スクリプト（計16本）",
+            "rule": "harness/meta-harness.js, harness/verify_classmate_ux_and_ops.js, harness/verify_cold_start_compliance.js, harness/verify_mobile_bento_grid.js ..."
           }
         ],
-        "ops_pattern": "Git Push 自動デプロイ ＋ 週次ポータル監査 ＋ 毎時CF集計",
+        "ops_pattern": "GitHub Actions 自動パイプライン ＋ Cloudflare Pages 即時反映 ＋ Task Scheduler",
         "ops_routines": [
           {
-            "trigger": "GitHub Push時 (自動)",
-            "action": "Cloudflare Pages へ即時ビルド＆本番デプロイ"
+            "trigger": "GitHub Actions (manual)",
+            "action": ".github/workflows/autonomous-hill-climb.yml"
           },
           {
-            "trigger": "毎時 (GraphQL API)",
-            "action": "Cloudflare Web Analytics からUU・PV・流入元を自動取得"
+            "trigger": "GitHub Actions (cron: 0 18 * * 6, manual)",
+            "action": ".github/workflows/autonomous-pipeline.yml"
+          },
+          {
+            "trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)",
+            "action": "毎時 Cloudflare GraphQL API からUU・PV・流入元を自動取得"
+          },
+          {
+            "trigger": "Git Push (main)",
+            "action": "Cloudflare Pages へ自動ビルド＆本番反映"
           }
         ]
       },
@@ -236,14 +256,15 @@
       },
       "stack": [
         "GitHub Pages",
-        "Vanilla JS",
+        "Vanilla JS / HTML",
         "Web Speech API",
         "PWA (Service Worker)"
       ],
       "harness": [
-        "180枚画像ゲート",
-        "音声被りゼロ検証",
-        "E2E実機幾何監査"
+        "180枚手技画像品質ゲート (harness/image_quality_gate.py)",
+        "実機幾何レイアウト検証 (harness/visual_geometric_harness.js)",
+        "臨床コンテンツ監査 (harness/critic_auditor.js)",
+        "コールドスタート準拠検証 (harness/verify_cold_start_compliance.js)"
       ],
       "progress": {
         "exists": true,
@@ -269,32 +290,40 @@
           "delta": "PWA稼働"
         }
       ],
-      "mermaid_template": "flowchart LR\n  A[\"手技データ & SW\\n(mmt_card_game)\"] --> B{\"3層ハーネス監査\"}\n  B -->|\"{{kpi_1}}\"| C[\"GitHub Pages v21\\n({{kpi_0}})\"]\n  C --> D[\"PWA スタンドアロン\"]",
+      "mermaid_template": "flowchart TD\n  S[\"手技データ & Service Worker\"] --> G\n  subgraph G[\"3層並列ハーネス\"]\n    G1[\"image_quality_gate.py\"]\n    G2[\"visual_geometric_harness.js\"]\n    G3[\"critic_auditor.js\"]\n  end\n  G1 -.->|\"FAIL 差し戻し\"| S\n  G2 -.->|\"FAIL 差し戻し\"| S\n  G -->|\"{{kpi_1}}\"| P[\"GitHub Pages v21\\n({{kpi_0}})\"]\n  P <-->|\"Network/Cache First\"| U[\"PWA スタンドアロン\"]",
       "governance": {
-        "dev_pattern": "厳格3層ハーネス開発（構文・画像・実機E2Eの3層全通過時のみ公開）",
+        "dev_pattern": "3層並列ハーネス（画像品質・幾何レイアウト・臨床監査）",
         "dev_gates": [
           {
-            "name": "第2層 画像品質ゲート",
-            "rule": "180枚の手技画像の欠損・解像度・ラベル整合を全数検査"
+            "name": "180枚手技画像品質ゲート (harness/image_quality_gate.py)",
+            "rule": "実在スクリプト: harness/area7_qa_gate.js"
           },
           {
-            "name": "Web Speech 音声制御ゲート",
-            "rule": "850ms静寂ポーズ制御による読み札の音声被り・語尾切れ根絶"
+            "name": "実機幾何レイアウト検証 (harness/visual_geometric_harness.js)",
+            "rule": "実在スクリプト: harness/critic_auditor.js"
           },
           {
-            "name": "PWA キャッシュ整合ゲート",
-            "rule": "Network First (コード) + Cache First (手技画像) の正常動作検証"
+            "name": "臨床コンテンツ監査 (harness/critic_auditor.js)",
+            "rule": "実在スクリプト: harness/image_quality_gate.py"
+          },
+          {
+            "name": "コールドスタート準拠検証 (harness/verify_cold_start_compliance.js)",
+            "rule": "実在スクリプト: harness/verify_cold_start_compliance.js"
+          },
+          {
+            "name": "その他検証スクリプト（計8本）",
+            "rule": "harness/visual_geometric_harness.js, scripts/run_audit_loop.js, scripts/verify_karuta_behavior.js, scripts/verify_region_filter.js"
           }
         ],
-        "ops_pattern": "静的PWA配信（サーバーレス・GitHub Pagesホスティング）",
+        "ops_pattern": "GitHub Actions Pages 自動デプロイ（静的PWA配信）",
         "ops_routines": [
           {
-            "trigger": "v21リリース完了済",
-            "action": "GitHub Pages 上でスタンドアロンPWAとして常時配信"
+            "trigger": "GitHub Actions (push, manual)",
+            "action": ".github/workflows/pages.yml"
           },
           {
-            "trigger": "フィードバック発生時",
-            "action": "PROGRESS.md / 次期改修へ起票し3層ハーネス再検証"
+            "trigger": "PWA常時配信 (v21確定)",
+            "action": "sw.js (Network First / Cache First) によるオフライン両立配信"
           }
         ]
       },
@@ -335,14 +364,14 @@
       },
       "stack": [
         "Python",
-        "Remotion / MoviePy",
-        "12-Gate Evaluator",
-        "AI Auditor"
+        "Manim",
+        "FFmpeg",
+        "TTS音声合成"
       ],
       "harness": [
-        "決定論12ゲート",
-        "コールドスタートAI審判",
-        "WIP=1 差戻し制御"
+        "統合動画ハーネス (harness/run_video_harness.py)",
+        "決定論12ゲート評価 (harness/deterministic_evaluator.py)",
+        "コールドスタートAI審判 (5軸+6画像)"
       ],
       "progress": {
         "exists": true,
@@ -372,32 +401,32 @@
           "delta": "12ゲート監査"
         }
       ],
-      "mermaid_template": "flowchart LR\n  A[\"50本カリキュラム\\n(pt_stats_video_factory)\"] --> B{\"12決定論ゲート\"}\n  B -->|PASS| C{\"コールドスタートAI審判\"}\n  C -->|\"{{kpi_1}}\"| D[\"完パケ動画\\n({{kpi_0}})\"]",
+      "mermaid_template": "flowchart TD\n  C[\"50本カリキュラム (WIP=1)\"] --> D[\"deterministic_evaluator.py (12ゲート)\"]\n  D -.->|\"FAIL 差し戻し\"| C\n  D -->|\"12/12 PASS\"| J[\"コールドスタートAI審判 (5軸+6画像)\"]\n  J -.->|\"REJECT 差し戻し\"| C\n  J -->|\"{{kpi_1}}\"| O[\"完パケ動画 & レポート\\n({{kpi_0}})\"]",
       "governance": {
-        "dev_pattern": "WIP=1 閉ループ動画ハーネス（12決定論ゲート ＋ 独立AI審判）",
+        "dev_pattern": "WIP=1 閉ループ動画ハーネス（12決定論ゲート ＋ AI審判）",
         "dev_gates": [
           {
-            "name": "決定論的12ゲート評価",
-            "rule": "音声同期・字幕レイアウト・数値トレース一致を自動機械判定"
+            "name": "統合動画ハーネス (harness/run_video_harness.py)",
+            "rule": "実在スクリプト: harness/run_video_harness.py"
           },
           {
-            "name": "コールドスタートAI審判",
-            "rule": "5軸＋6枚の抜き打ち画像から95点以上を合格とする独立監査"
+            "name": "決定論12ゲート評価 (harness/deterministic_evaluator.py)",
+            "rule": "実在スクリプト: harness/run_video_harness.py"
           },
           {
-            "name": "WIP=1 差し戻しループ",
-            "rule": "不合格ノードのみを自動特定して再生成へ差し戻し"
+            "name": "コールドスタートAI審判 (5軸+6画像)",
+            "rule": "実在スクリプト: harness/run_video_harness.py"
           }
         ],
-        "ops_pattern": "単元別バッチ生産（1本ずつ完全合格させて次単元へ進行）",
+        "ops_pattern": "単元別ローカル実行（harness/run_video_harness.py）",
         "ops_routines": [
           {
-            "trigger": "単元制作時 (手動起動)",
-            "action": "run_video_harness.py で生成→12ゲート→AI審判を一気通貫実行"
+            "trigger": "単元制作時 (手動CLI実行)",
+            "action": "python harness/run_video_harness.py で生成・監査・report_*.json 出力"
           },
           {
-            "trigger": "合格後",
-            "action": "PROGRESS.md と report_*.json に公証レポートを自動記録"
+            "trigger": "Task Scheduler (Antigravity_Cockpit_Hourly_Sync)",
+            "action": "毎時 report_*.json の PASS/REJECT 件数と平均点を集計"
           }
         ]
       },
@@ -446,12 +475,12 @@
       },
       "stack": [
         "LINE Messaging API",
-        "GAS",
+        "GAS (Google Apps Script)",
         "Instagram Reels"
       ],
       "harness": [
-        "Webhook疎通検証",
-        "Flex Message構文検証"
+        "Webhook 200 OK 疎通テスト (導入予定)",
+        "Flex Message JSON 構文検証 (導入予定)"
       ],
       "progress": {
         "exists": true,
@@ -474,24 +503,24 @@
           "delta": "リソース集中"
         }
       ],
-      "mermaid_template": "flowchart LR\n  A[\"Instagram リール\"] --> B[\"立腰公式LINE\\n({{kpi_0}})\"]\n  B --> C[\"GAS Webhook応答\"]\n  C --> D[\"体操解説・教室案内\"]",
+      "mermaid_template": "flowchart LR\n  IG[\"Instagram リール\"] --> L[\"立腰公式LINE\\n({{kpi_0}})\"]\n  L <-->|\"Webhook 双方向応答\"| GAS[\"GAS サーバーレス\"]\n  GAS --> R[\"体操解説・教室予約導線\"]",
       "governance": {
-        "dev_pattern": "GAS Webhook イベント駆動開発（軽量サーバーレス構成）",
+        "dev_pattern": "構想段階（PTポータル＆Shorts導線確立後に着手）",
         "dev_gates": [
           {
-            "name": "Webhook 200 OK 疎通検証",
-            "rule": "LINE Messaging API からのPOSTに対する即時応答担保"
+            "name": "Webhook 200 OK 疎通テスト (導入予定)",
+            "rule": "スクリプト未配備（導入予定）"
           },
           {
-            "name": "Flex Message JSON検証",
-            "rule": "カルーセル・動画リンクカードの表示崩れ防止"
+            "name": "Flex Message JSON 構文検証 (導入予定)",
+            "rule": "スクリプト未配備（導入予定）"
           }
         ],
-        "ops_pattern": "自動応答 ＋ 対面教室連動（PT導線確立後に本格始動）",
+        "ops_pattern": "計画的保留（自動実行スケジュール未設定）",
         "ops_routines": [
           {
-            "trigger": "着手条件達成時",
-            "action": "PTポータル・Shorts初期10本導線の安定稼働後に再開"
+            "trigger": "着手条件達成時 (手動再開)",
+            "action": "PTポータル・Shorts初期10本安定後に GAS Webhook 実装開始"
           }
         ]
       },
