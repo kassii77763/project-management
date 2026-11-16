@@ -789,7 +789,7 @@ def build_portfolio():
             "role": "国試・統計解説動画の自律量産",
             "status": "パイロット検証中",
             "path": "projects/pt_stats_video_factory",
-            "url": "#",
+            "url": "https://pt-student-portal.pages.dev/stats.html",
             "git": get_git_info(STATS_DIR),
             "last_updated_at": get_project_last_updated_at(STATS_DIR),
             "quick_links": parse_quick_links(STATS_DIR),

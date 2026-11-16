@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 23:54 JST",
+    "last_sync": "2026-11-16 23:56 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -410,13 +410,21 @@
       "role": "国試・統計解説動画の自律量産",
       "status": "パイロット検証中",
       "path": "projects/pt_stats_video_factory",
-      "url": "#",
+      "url": "https://pt-student-portal.pages.dev/stats.html",
       "git": {
         "sha": "-",
         "last_commit_date": "-"
       },
       "last_updated_at": "2026-11-14T16:57:08+09:00",
       "quick_links": [
+        {
+          "label": "統計学 講義・例題攻略ハブ",
+          "url": "https://pt-student-portal.pages.dev/stats.html"
+        },
+        {
+          "label": "クラスメイト限定ハブ",
+          "url": "https://pt-student-portal.pages.dev/classmate.html"
+        },
         {
           "label": "YouTube Studio",
           "url": "https://studio.youtube.com/"
