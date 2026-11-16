@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 22:54 JST",
+    "last_sync": "2026-11-16 23:49 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -17,6 +17,21 @@
         "sha": "-",
         "last_commit_date": "-"
       },
+      "last_updated_at": "2026-11-16T14:09:05+09:00",
+      "quick_links": [
+        {
+          "label": "YouTube チャンネル",
+          "url": "https://www.youtube.com/channel/UCZ1AqHX59h7UCsCkIgHINrQ"
+        },
+        {
+          "label": "YouTube Studio",
+          "url": "https://studio.youtube.com/channel/UCZ1AqHX59h7UCsCkIgHINrQ"
+        },
+        {
+          "label": "公式LINE",
+          "url": "https://lin.ee/Rg1jWM7"
+        }
+      ],
       "stack": [
         "Python",
         "Blender / Z-Anatomy",
@@ -42,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,968回",
+          "value": "22,980回",
           "delta": "36本公開"
         },
         {
@@ -89,7 +104,7 @@
           },
           {
             "name": "総コメント",
-            "value": "13件"
+            "value": "16件"
           }
         ],
         "recent_items": [
@@ -123,6 +138,29 @@
         "sha": "5842cd5",
         "last_commit_date": "2026-11-16"
       },
+      "last_updated_at": "2026-11-16T23:19:20+09:00",
+      "quick_links": [
+        {
+          "label": "公開サイト",
+          "url": "https://pt-student-portal.pages.dev"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/kassii77763/pt-student-portal"
+        },
+        {
+          "label": "Cloudflare",
+          "url": "https://dash.cloudflare.com/"
+        },
+        {
+          "label": "AdSense",
+          "url": "https://adsense.google.com/adsense/u/2/pub-7918089251306963/onboarding"
+        },
+        {
+          "label": "公式LINE",
+          "url": "https://lin.ee/Rg1jWM7"
+        }
+      ],
       "stack": [
         "Cloudflare Pages",
         "Cloudflare Analytics API",
@@ -254,6 +292,21 @@
         "sha": "a309ee6",
         "last_commit_date": "2026-11-16"
       },
+      "last_updated_at": "2026-11-16T14:25:42+09:00",
+      "quick_links": [
+        {
+          "label": "公開PWA",
+          "url": "https://kassii77763.github.io/daniels-mmt-card-game/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/kassii77763/daniels-mmt-card-game"
+        },
+        {
+          "label": "Pages設定",
+          "url": "https://github.com/kassii77763/daniels-mmt-card-game/settings/pages"
+        }
+      ],
       "stack": [
         "GitHub Pages",
         "Vanilla JS / HTML",
@@ -362,6 +415,13 @@
         "sha": "-",
         "last_commit_date": "-"
       },
+      "last_updated_at": "2026-11-14T16:57:08+09:00",
+      "quick_links": [
+        {
+          "label": "YouTube Studio",
+          "url": "https://studio.youtube.com/"
+        }
+      ],
       "stack": [
         "Python",
         "Manim",
@@ -473,6 +533,17 @@
         "sha": "-",
         "last_commit_date": "-"
       },
+      "last_updated_at": "2026-11-03T16:47:46+09:00",
+      "quick_links": [
+        {
+          "label": "LINE公式管理",
+          "url": "https://manager.line.biz/"
+        },
+        {
+          "label": "GAS",
+          "url": "https://script.google.com/"
+        }
+      ],
       "stack": [
         "LINE Messaging API",
         "GAS (Google Apps Script)",

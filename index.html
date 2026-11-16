@@ -156,6 +156,11 @@
             <span class="text-[#6B7280]">公開URL / エンドポイント</span>
             <a id="detail-url" href="#" target="_blank" rel="noopener noreferrer" class="text-[#1F2937] underline underline-offset-2 hover:opacity-75">開く ↗</a>
           </div>
+
+          <div id="detail-quick-links-wrap" class="pt-3 border-t border-[#EAEAEA]">
+            <div class="text-[11px] font-medium text-[#6B7280] mb-2">管理画面クイックリンク</div>
+            <div id="detail-quick-links" class="flex flex-wrap gap-1.5"></div>
+          </div>
         </div>
 
       </div>
@@ -271,6 +276,21 @@
       }
     }
 
+    function formatRelativeFreshness(isoStr) {
+      if (!isoStr) return { text: '-', isStale: false };
+      const ts = new Date(isoStr).getTime();
+      if (Number.isNaN(ts)) return { text: '-', isStale: false };
+      const diffMs = Math.max(0, Date.now() - ts);
+      const mins = Math.floor(diffMs / 60000);
+      const hours = Math.floor(diffMs / 3600000);
+      const days = Math.floor(diffMs / 86400000);
+      let text = 'たった今';
+      if (days >= 1) text = `${days}日前`;
+      else if (hours >= 1) text = `${hours}時間前`;
+      else if (mins >= 1) text = `${mins}分前`;
+      return { text, isStale: days >= 7 };
+    }
+
     function renderGrid() {
       const grid = document.getElementById('project-grid');
       grid.innerHTML = appData.projects.map(p => {
@@ -278,15 +298,16 @@
         const mainKpi = p.north_star_kpis && p.north_star_kpis[0]
           ? `${p.north_star_kpis[0].label}: ${p.north_star_kpis[0].value}`
           : '';
-        const updatedDate = (p.progress && p.progress.updated_at && p.progress.updated_at !== '-')
-          ? p.progress.updated_at.slice(0, 10)
-          : '-';
+        const freshness = formatRelativeFreshness(p.last_updated_at);
+        const badgeClass = freshness.isStale
+          ? 'text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200'
+          : 'text-[10px] font-mono text-[#9CA3AF]';
         return `
           <div onclick="selectProject('${esc(p.id)}')" class="bento-card project-card ${isActive ? 'active' : ''} p-4 cursor-pointer transition hover:border-[#9CA3AF] flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
                 <span class="text-[11px] font-medium text-[#6B7280]">${esc(p.status)}</span>
-                <span class="text-[10px] font-mono text-[#9CA3AF]">${esc(updatedDate)}</span>
+                <span class="${badgeClass}" title="最終更新: ${esc(p.last_updated_at || '-')}">${esc(freshness.text)}</span>
               </div>
               <h3 class="text-sm font-semibold text-[#1F2937] mb-0.5 truncate">${esc(p.name)}</h3>
               <p class="text-xs text-[#6B7280] mb-3 truncate">${esc(p.role)}</p>
@@ -329,6 +350,23 @@
 
       document.getElementById('detail-harness').innerHTML = (p.harness || [])
         .map(h => `<span class="pill-tag">${esc(h)}</span>`).join('');
+
+      const qLinks = p.quick_links || [];
+      const qWrap = document.getElementById('detail-quick-links-wrap');
+      const qContainer = document.getElementById('detail-quick-links');
+      if (qLinks.length > 0) {
+        qWrap.classList.remove('hidden');
+        qContainer.innerHTML = qLinks.map(ql => `
+          <a href="${esc(ql.url)}" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-1 text-[11px] font-medium text-[#1F2937] bg-[#F7F6F3] hover:bg-[#EAEAEA] border border-[#EAEAEA] px-2.5 py-1 rounded-md transition">
+            <span>${esc(ql.label)}</span>
+            <span class="text-[#6B7280]">↗</span>
+          </a>
+        `).join('');
+      } else {
+        qWrap.classList.add('hidden');
+        qContainer.innerHTML = '';
+      }
 
       // PROGRESS.md 最新情報の描画
       const prog = p.progress || {};

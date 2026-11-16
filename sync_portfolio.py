@@ -203,6 +203,67 @@ def parse_agents_md_tags(proj_dir, default_stack, default_harness):
     return (stack if stack else default_stack), (harness if harness else default_harness)
 
 
+def parse_quick_links(proj_dir):
+    """AGENTS.md の QUICK_LINKS_START/END セクションから管理画面リンク集を抽出する"""
+    md_path = os.path.join(proj_dir, "AGENTS.md")
+    if not os.path.exists(md_path):
+        return []
+
+    with open(md_path, "r", encoding="utf-8") as f:
+        text = f.read()
+
+    m = re.search(r"<!-- QUICK_LINKS_START -->(.*?)<!-- QUICK_LINKS_END -->", text, re.DOTALL)
+    if not m:
+        return []
+
+    links = []
+    for ln in m.group(1).strip().splitlines():
+        ln = ln.strip()
+        if not (ln.startswith("- ") or ln.startswith("* ")):
+            continue
+        body = ln[2:].strip()
+        if ":" not in body:
+            continue
+        label, url = body.split(":", 1)
+        label = label.strip()
+        url = url.strip()
+        if label and url.startswith(("http://", "https://")):
+            links.append({"label": label, "url": url})
+    return links
+
+
+def get_project_last_updated_at(proj_dir):
+    """プロジェクトの最終更新日時（Git最新コミットまたはAGENTS.mdを除く最新ファイルmtime）をISO 8601で返す"""
+    latest_ts = 0.0
+
+    if os.path.exists(os.path.join(proj_dir, ".git")):
+        try:
+            res = subprocess.run(
+                ["git", "log", "-1", "--format=%ct"],
+                cwd=proj_dir, capture_output=True, text=True
+            )
+            if res.returncode == 0 and res.stdout.strip().isdigit():
+                latest_ts = max(latest_ts, float(res.stdout.strip()))
+        except Exception:
+            pass
+
+    for dp, dn, fn in os.walk(proj_dir):
+        dn[:] = [d for d in dn if d not in (".git", "node_modules", "__pycache__", "scratch")]
+        for f in fn:
+            if f == "AGENTS.md":
+                continue
+            try:
+                mt = os.path.getmtime(os.path.join(dp, f))
+                if mt > latest_ts:
+                    latest_ts = mt
+            except Exception:
+                pass
+
+    if latest_ts <= 0:
+        return datetime.now(JST).isoformat(timespec="seconds")
+    return datetime.fromtimestamp(latest_ts, JST).isoformat(timespec="seconds")
+
+
 def scan_actual_harness_scripts(proj_dir):
     """プロジェクト内の実在する検証・監査スクリプトを走査する"""
     found = []
@@ -581,6 +642,8 @@ def build_portfolio():
             "path": "projects/youtube_visual_library",
             "url": "https://www.youtube.com/channel/UCZ1AqHX59h7UCsCkIgHINrQ",
             "git": get_git_info(YT_DIR),
+            "last_updated_at": get_project_last_updated_at(YT_DIR),
+            "quick_links": parse_quick_links(YT_DIR),
             "stack": yt_stack,
             "harness": yt_harness,
             "progress": parse_progress_md(YT_DIR),
@@ -628,6 +691,8 @@ def build_portfolio():
             "path": "projects/pt_student_portal",
             "url": "https://pt-student-portal.pages.dev",
             "git": get_git_info(PT_DIR),
+            "last_updated_at": get_project_last_updated_at(PT_DIR),
+            "quick_links": parse_quick_links(PT_DIR),
             "stack": pt_stack,
             "harness": pt_harness,
             "progress": parse_progress_md(PT_DIR),
@@ -675,6 +740,8 @@ def build_portfolio():
             "path": "projects/mmt_card_game",
             "url": "https://kassii77763.github.io/daniels-mmt-card-game/",
             "git": get_git_info(MMT_DIR),
+            "last_updated_at": get_project_last_updated_at(MMT_DIR),
+            "quick_links": parse_quick_links(MMT_DIR),
             "stack": mmt_stack,
             "harness": mmt_harness,
             "progress": parse_progress_md(MMT_DIR),
@@ -724,6 +791,8 @@ def build_portfolio():
             "path": "projects/pt_stats_video_factory",
             "url": "#",
             "git": get_git_info(STATS_DIR),
+            "last_updated_at": get_project_last_updated_at(STATS_DIR),
+            "quick_links": parse_quick_links(STATS_DIR),
             "stack": stats_stack,
             "harness": stats_harness,
             "progress": parse_progress_md(STATS_DIR),
@@ -766,6 +835,8 @@ def build_portfolio():
             "path": "projects/line_bot_proposal",
             "url": "#",
             "git": get_git_info(LINE_DIR),
+            "last_updated_at": get_project_last_updated_at(LINE_DIR),
+            "quick_links": parse_quick_links(LINE_DIR),
             "stack": line_stack,
             "harness": line_harness,
             "progress": parse_progress_md(LINE_DIR),
