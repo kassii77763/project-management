@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 16:54 JST",
+    "last_sync": "2026-11-16 17:54 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -157,12 +157,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "110人",
-          "delta": "深度 3.82 PV/人"
+          "value": "120人",
+          "delta": "深度 3.58 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "420 PV",
+          "value": "430 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -230,7 +230,7 @@
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "60 PV"
+            "views": "70 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
