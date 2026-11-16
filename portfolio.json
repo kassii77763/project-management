@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 00:54 JST",
+    "last_sync": "2026-11-17 01:54 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,980回",
+          "value": "22,982回",
           "delta": "36本公開"
         },
         {
