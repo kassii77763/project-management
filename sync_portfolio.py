@@ -58,7 +58,8 @@ def get_git_info(repo_path):
 
 
 def _clean_md_text(text):
-    """Markdown装飾（太字・リンク・バッククォート等）を簡潔なプレーンテキストに整形"""
+    """Markdown装飾（太字・リンク・バッククォート・制御文字等）を簡潔なプレーンテキストに整形"""
+    text = re.sub(r"[\x00-\x1f\x7f]", "", text)
     text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
     text = text.replace("**", "").replace("`", "")
     return re.sub(r"\s+", " ", text).strip()
@@ -371,19 +372,35 @@ def scan_stats_factory_metrics():
     passed = 0
     rejected = 0
     scores = []
+    recent_reports = []
     for rp in reports:
         try:
             with open(rp, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            if data.get("finalVerdict") == "PASS":
+            vid = data.get("videoId", os.path.basename(rp))
+            verdict = data.get("finalVerdict", "UNKNOWN")
+            if verdict == "PASS":
                 passed += 1
-            elif data.get("finalVerdict") == "REJECT":
+            elif verdict == "REJECT":
                 rejected += 1
-            sc = data.get("coldStartJudge", {}).get("totalScore")
+            judge = data.get("coldStartJudge", {})
+            sc = judge.get("overallScore") or judge.get("total_score") or judge.get("totalScore")
             if isinstance(sc, (int, float)):
                 scores.append(sc)
+            recent_reports.append({
+                "vid": vid,
+                "verdict": verdict,
+                "score": sc if isinstance(sc, (int, float)) else 0,
+                "mtime": os.path.getmtime(rp)
+            })
         except Exception:
             pass
+
+    recent_reports.sort(key=lambda x: (x["verdict"] == "PASS", -x["mtime"]))
+    top_items = [
+        {"title": f"動画ID: {r['vid']}", "views": f"{r['score']}/100 ({r['verdict']})"}
+        for r in recent_reports[:4]
+    ]
 
     total_target = 50
     cfg_path = os.path.join(STATS_DIR, "configs", "curriculum_map_50.json")
@@ -402,7 +419,8 @@ def scan_stats_factory_metrics():
         "passed_count": passed,
         "rejected_count": rejected,
         "total_target": total_target,
-        "avg_score": avg_score
+        "avg_score": avg_score,
+        "top_items": top_items
     }
 
 
@@ -597,11 +615,7 @@ def build_portfolio():
                     {"name": "決定論ゲート", "value": "12/12 PASS"},
                     {"name": "対象カリキュラム", "value": f"{stats_m['total_target']}本"}
                 ],
-                "recent_items": [
-                    {"title": "【5-4】標準誤差（SE）＝平均値の品質保証書", "views": "98/100 PASS"},
-                    {"title": "【1-2】度数分布表とヒストグラム", "views": "96/100 PASS"},
-                    {"title": "【2-4】標準偏差（SD）！血圧10人データ", "views": "97/100 PASS"}
-                ]
+                "recent_items": stats_m["top_items"]
             }
         },
         {

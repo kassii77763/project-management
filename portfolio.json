@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 14:21 JST",
+    "last_sync": "2026-11-16 14:26 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -41,7 +41,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,544回",
+          "value": "22,585回",
           "delta": "34本公開"
         },
         {
@@ -141,7 +141,7 @@
           "【2026-11-09 最新】14軸ポータル監査指摘のハーネス統合＆本体修正完了:",
           "data-integrity-scanner.js に「CTAスロット外部リンク（note/LINE）のプレースホルダー・ダミーURL検知ルール」を昇格追加。",
           "erify_smoke_drill.js のLINE短縮URL（lin.ee）適合化。",
-          "\u0007pp.js の神動画キュレーション科目フィルター（ .category || v.subject）フォールバック修正。"
+          "pp.js の神動画キュレーション科目フィルター（.category || v.subject）フォールバック修正。"
         ],
         "next_actions": [
           "【Step 3】取りこぼしゼロキャッシュポイント整理（Amazon参考書枠はアフィリエイト臭排除のため撤去完了、実用note導線・転職枠へ純化）。",
@@ -231,7 +231,7 @@
       "path": "projects/mmt_card_game",
       "url": "https://kassii77763.github.io/daniels-mmt-card-game/",
       "git": {
-        "sha": "cf2f047",
+        "sha": "a309ee6",
         "last_commit_date": "2026-11-16"
       },
       "stack": [
@@ -368,7 +368,7 @@
         },
         {
           "label": "AI審判平均スコア",
-          "value": "計測中",
+          "value": "96.5 / 100点",
           "delta": "12ゲート監査"
         }
       ],
@@ -415,16 +415,20 @@
         ],
         "recent_items": [
           {
-            "title": "【5-4】標準誤差（SE）＝平均値の品質保証書",
-            "views": "98/100 PASS"
+            "title": "動画ID: 5-4",
+            "views": "98/100 (PASS)"
           },
           {
-            "title": "【1-2】度数分布表とヒストグラム",
-            "views": "96/100 PASS"
+            "title": "動画ID: 2-4",
+            "views": "97/100 (PASS)"
           },
           {
-            "title": "【2-4】標準偏差（SD）！血圧10人データ",
-            "views": "97/100 PASS"
+            "title": "動画ID: 2-3",
+            "views": "94/100 (PASS)"
+          },
+          {
+            "title": "動画ID: 2-2",
+            "views": "95/100 (PASS)"
           }
         ]
       }
