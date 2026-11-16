@@ -9,3 +9,4 @@
 
 ## 自動同期
 Windows Task Scheduler（`Antigravity_Cockpit_Hourly_Sync`）から毎時実行され、`portfolio.json` を更新して GitHub Pages（`main` / `gh-pages`）へ自動デプロイします。
+
