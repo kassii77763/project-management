@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-16 21:54 JST",
+    "last_sync": "2026-11-16 22:54 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -42,13 +42,13 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,967回",
+          "value": "22,968回",
           "delta": "36本公開"
         },
         {
           "label": "チャンネル登録者",
           "value": "6人",
-          "delta": "高評価 73"
+          "delta": "高評価 74"
         }
       ],
       "mermaid_template": "flowchart TD\n  A[\"Z-Anatomy 3D素材 & 動画生成\"] --> G\n  subgraph G[\"並列品質ゲート (run_shorts_harness.py)\"]\n    B[\"deterministic_gate.py (OpenCV/FFmpeg)\"]\n    C[\"run_regression_tests.js (セーフゾーン)\"]\n  end\n  B -.->|\"FAIL 差し戻し\"| A\n  C -.->|\"FAIL 差し戻し\"| A\n  G -->|\"ALL PASS\"| D[\"YouTube Shorts\\n({{kpi_0}})\"]\n  D --> E[\"PT学生学習帖 (Web)\"]\n  D --> F[\"公式LINE 導線\"]",
