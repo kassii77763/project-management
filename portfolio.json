@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 23:54 JST",
+    "last_sync": "2026-11-18 00:28 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "24,872回",
+          "value": "24,878回",
           "delta": "39本公開"
         },
         {
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "18198b6",
-        "last_commit_date": "2026-11-17"
+        "sha": "09ea94f",
+        "last_commit_date": "2026-11-18"
       },
-      "last_updated_at": "2026-11-17T23:53:59+09:00",
+      "last_updated_at": "2026-11-18T00:13:41+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -289,30 +289,30 @@
       "id": "medical-reskill-navi",
       "name": "医療系リスキリング・入学ナビ",
       "role": "社会人入学・給付金ナビ（着地点B: /admission ・Ch.B）",
-      "status": "運用構築中",
+      "status": "運用中",
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "18198b6",
-        "last_commit_date": "2026-11-17"
+        "sha": "09ea94f",
+        "last_commit_date": "2026-11-18"
       },
-      "last_updated_at": "2026-11-17T23:53:59+09:00",
+      "last_updated_at": "2026-11-18T00:13:41+09:00",
       "quick_links": [
+        {
+          "label": "YouTube Ch.B",
+          "url": "https://www.youtube.com/channel/UCLB6j-_B6m2g7VdvokfVScA"
+        },
         {
           "label": "専用LP (/admission)",
           "url": "https://pt-student-portal.pages.dev/admission?utm_source=yt_reskill"
-        },
-        {
-          "label": "統合実装プラン",
-          "url": "projects/pt_student_portal/docs/integration_plan.html"
         }
       ],
       "stack": [
         "Cloudflare Pages (/admission)",
         "Playwright 9:16",
         "FFmpeg",
-        "Google Sheets API",
-        "YouTube Data API v3"
+        "YouTube Data API v3",
+        "Google AdSense"
       ],
       "harness": [
         {
@@ -320,38 +320,38 @@
           "status": "PASS"
         },
         {
-          "name": "2周目SHA-256差分・1.5sエンドカード検査 (scripts/record_shorts_v2.js)",
+          "name": "100本チャット台本・2周目SHA-256差分検査 (scripts/record_shorts_v2.js)",
           "status": "PASS"
         }
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-17 23:54",
-        "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
+        "updated_at": "2026-11-18 00:28",
+        "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
-          "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
-          "100本ネタ台帳 2周目フックリライト・色/BGMローテーション実装",
-          "token_study.json / token_reskill.json OAuth分離対応完了"
+          "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
+          "100本ネタ台帳 (reskill-100-topics.json) 全件にCTAレス高速チャット台本を実装",
+          "本番 /admission・privacy.html・robots.txt・AdSense自動広告設定反映済み"
         ],
         "next_actions": [
-          "secrets/token_reskill.json のOAuth認証セットアップ",
-          "Google Sheets 100本ネタ台帳のID (.env CH_RESKILL_GSHEET_ID) 設定",
-          "note詳細ロードマップ記事URLの本番差し替え＆Cloudflare Pagesデプロイ"
+          "reskill-002以降のバッチ生成・スケジュール自動投稿運用",
+          "note詳細ロードマップ記事URL確定後の .admission-note-link 差し替え",
+          "YouTube Studio 上級者向け機能（概要欄外部リンク有効化）の1回限り確認"
         ]
       },
       "north_star_kpis": [
         {
-          "label": "ネタサイクル設計",
-          "value": "100本循環",
-          "delta": "2周目自動リライト"
+          "label": "YouTube 総再生数",
+          "value": "12回",
+          "delta": "1本公開 / 登録0人"
         },
         {
-          "label": "E2E防衛ゲート",
-          "value": "100% PASS",
-          "delta": "SHA-256差分検証済"
+          "label": "ネタ台帳 / 動画形式",
+          "value": "100本完備",
+          "delta": "CTAレス高速チャット式"
         }
       ],
-      "mermaid_template": "flowchart TD\n  GS[\"Sheets 100本台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(--channel=reskill)\"]\n  REC -->|\"2周目リライト＋1.5sエンドカード\"| YT[\"upload_youtube.js\\n(token_reskill.json)\"]\n  YT -->|\"?utm_source=yt_reskill\"| LP[\"/admission 専用3要素LP\"]\n  LP -->|\"シミュレーター＋FAQ\"| NOTE[\"note 詳細ロードマップ\"]",
+      "mermaid_template": "flowchart TD\n  JSON[\"100本JSON台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(高速チャット+SFX)\"]\n  REC -->|\"2周目自動リライト\"| YT[\"upload_youtube.js\\n(Ch.B: {{kpi_0}})\"]\n  YT -->|\"?utm_source=yt_reskill\"| LP[\"/admission 専用3要素LP\"]\n  LP -->|\"AdSense / note\"| MON[\"収益化・資料導線\"]",
       "governance": {
         "dev_pattern": "着地URL3要素分離検査 ＋ 2周目動画SHA-256非一致ゲート",
         "dev_gates": [
@@ -378,35 +378,39 @@
             "action": ".github/workflows/autonomous-pipeline.yml"
           },
           {
-            "trigger": "Daily Shorts Pipeline (--channel=reskill)",
-            "action": "台帳取得 → 動画生成 → YouTube予約投稿"
+            "trigger": "Task Scheduler (Hourly Sync)",
+            "action": "毎時 YouTube Data API v3 (Ch.B) から再生数・動画数を自動取得"
           },
           {
-            "trigger": "Git Push (pt_student_portal)",
-            "action": "Cloudflare Pages /admission ルート即時反映"
+            "trigger": "Shorts Pipeline (--channel=reskill)",
+            "action": "100本JSON台帳 → チャット動画生成 → YouTube投稿"
           }
         ]
       },
       "analytics_detail": {
-        "source": "統合基盤共有 (utm_source=yt_reskill)",
+        "source": "YouTube Data API v3 (Ch.B)",
         "metrics": [
           {
-            "name": "着地URL",
-            "value": "/admission"
+            "name": "チャンネル登録者数",
+            "value": "0人"
           },
           {
-            "name": "対応資格",
-            "value": "PT / OT / 看護 / その他"
+            "name": "総再生数",
+            "value": "12回"
+          },
+          {
+            "name": "総高評価 / コメント",
+            "value": "0 / 0"
+          },
+          {
+            "name": "公開動画数",
+            "value": "1本"
           }
         ],
         "recent_items": [
           {
-            "label": "OAuth分離",
-            "value": "token_reskill.json"
-          },
-          {
-            "label": "エンドカード",
-            "value": "末尾1.5秒自動合成"
+            "title": "最大256万円の給付金、入学後すぐ振り込まれると思ってない？ #Shorts",
+            "views": "12回"
           }
         ]
       }
@@ -768,7 +772,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-17T23:38:26+09:00",
+      "last_updated_at": "2026-11-18T00:26:02+09:00",
       "quick_links": [],
       "stack": [
         "Python",

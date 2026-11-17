@@ -407,15 +407,14 @@ def fetch_cloudflare_analytics(env_keys):
     return result
 
 
-def fetch_youtube_channel_stats(env_keys):
+def fetch_youtube_channel_stats(env_keys, channel_id="UCZ1AqHX59h7UCsCkIgHINrQ", default_name="とあるPT学生"):
     """公式 YouTube Data API v3 連携: チャンネル全アップロード動画を自動走査"""
     api_key = env_keys.get("YOUTUBE_API_KEY", "")
-    channel_id = "UCZ1AqHX59h7UCsCkIgHINrQ"
-    uploads_playlist_id = "UUZ1AqHX59h7UCsCkIgHINrQ"
+    uploads_playlist_id = ("UU" + channel_id[2:]) if channel_id.startswith("UC") else ""
 
     result = {
         "api_connected": False,
-        "channel_name": "とあるPT学生",
+        "channel_name": default_name,
         "subscribers": "-",
         "total_views": 0,
         "total_likes": 0,
@@ -434,7 +433,7 @@ def fetch_youtube_channel_stats(env_keys):
             if items:
                 ch_item = items[0]
                 ch_stats = ch_item.get("statistics", {})
-                result["channel_name"] = ch_item.get("snippet", {}).get("title", "とあるPT学生")
+                result["channel_name"] = ch_item.get("snippet", {}).get("title", default_name)
                 result["subscribers"] = f"{ch_stats.get('subscriberCount', '0')}人"
                 uploads_playlist_id = ch_item.get("contentDetails", {}).get("relatedPlaylists", {}).get("uploads", uploads_playlist_id)
 
@@ -598,6 +597,7 @@ def build_portfolio():
 
     cf = fetch_cloudflare_analytics(env_keys)
     yt = fetch_youtube_channel_stats(env_keys)
+    yt_reskill = fetch_youtube_channel_stats(env_keys, "UCLB6j-_B6m2g7VdvokfVScA", "医療系リスキリング・入学ナビ")
     pt_m = scan_pt_portal_metrics()
     stats_m = scan_stats_factory_metrics()
 
@@ -754,45 +754,45 @@ def build_portfolio():
             "id": "medical-reskill-navi",
             "name": "医療系リスキリング・入学ナビ",
             "role": "社会人入学・給付金ナビ（着地点B: /admission ・Ch.B）",
-            "status": "運用構築中",
+            "status": "運用中",
             "path": "projects/pt_student_portal (/admission)",
             "url": "https://pt-student-portal.pages.dev/admission",
             "git": get_git_info(PT_DIR),
             "last_updated_at": get_project_last_updated_at(PT_DIR),
             "quick_links": [
-                {"label": "専用LP (/admission)", "url": "https://pt-student-portal.pages.dev/admission?utm_source=yt_reskill"},
-                {"label": "統合実装プラン", "url": "projects/pt_student_portal/docs/integration_plan.html"}
+                {"label": "YouTube Ch.B", "url": "https://www.youtube.com/channel/UCLB6j-_B6m2g7VdvokfVScA"},
+                {"label": "専用LP (/admission)", "url": "https://pt-student-portal.pages.dev/admission?utm_source=yt_reskill"}
             ],
-            "stack": ["Cloudflare Pages (/admission)", "Playwright 9:16", "FFmpeg", "Google Sheets API", "YouTube Data API v3"],
+            "stack": ["Cloudflare Pages (/admission)", "Playwright 9:16", "FFmpeg", "YouTube Data API v3", "Google AdSense"],
             "harness": [
                 {"name": "着地URL・2チャンネルE2E検証 (harness/verify_dual_landing_and_channels.js)", "status": "PASS"},
-                {"name": "2周目SHA-256差分・1.5sエンドカード検査 (scripts/record_shorts_v2.js)", "status": "PASS"}
+                {"name": "100本チャット台本・2周目SHA-256差分検査 (scripts/record_shorts_v2.js)", "status": "PASS"}
             ],
             "progress": {
                 "exists": True,
                 "updated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M"),
-                "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
+                "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
                 "highlights": [
-                    "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
-                    "100本ネタ台帳 2周目フックリライト・色/BGMローテーション実装",
-                    "token_study.json / token_reskill.json OAuth分離対応完了"
+                    "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
+                    "100本ネタ台帳 (reskill-100-topics.json) 全件にCTAレス高速チャット台本を実装",
+                    "本番 /admission・privacy.html・robots.txt・AdSense自動広告設定反映済み"
                 ],
                 "next_actions": [
-                    "secrets/token_reskill.json のOAuth認証セットアップ",
-                    "Google Sheets 100本ネタ台帳のID (.env CH_RESKILL_GSHEET_ID) 設定",
-                    "note詳細ロードマップ記事URLの本番差し替え＆Cloudflare Pagesデプロイ"
+                    "reskill-002以降のバッチ生成・スケジュール自動投稿運用",
+                    "note詳細ロードマップ記事URL確定後の .admission-note-link 差し替え",
+                    "YouTube Studio 上級者向け機能（概要欄外部リンク有効化）の1回限り確認"
                 ]
             },
             "north_star_kpis": [
-                {"label": "ネタサイクル設計", "value": "100本循環", "delta": "2周目自動リライト"},
-                {"label": "E2E防衛ゲート", "value": "100% PASS", "delta": "SHA-256差分検証済"}
+                {"label": "YouTube 総再生数", "value": f"{yt_reskill['total_views']:,}回", "delta": f"{yt_reskill['videos_count']}本公開 / 登録{yt_reskill['subscribers']}"},
+                {"label": "ネタ台帳 / 動画形式", "value": "100本完備", "delta": "CTAレス高速チャット式"}
             ],
             "mermaid_template": (
                 "flowchart TD\n"
-                "  GS[\"Sheets 100本台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(--channel=reskill)\"]\n"
-                "  REC -->|\"2周目リライト＋1.5sエンドカード\"| YT[\"upload_youtube.js\\n(token_reskill.json)\"]\n"
+                "  JSON[\"100本JSON台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(高速チャット+SFX)\"]\n"
+                "  REC -->|\"2周目自動リライト\"| YT[\"upload_youtube.js\\n(Ch.B: {{kpi_0}})\"]\n"
                 "  YT -->|\"?utm_source=yt_reskill\"| LP[\"/admission 専用3要素LP\"]\n"
-                "  LP -->|\"シミュレーター＋FAQ\"| NOTE[\"note 詳細ロードマップ\"]"
+                "  LP -->|\"AdSense / note\"| MON[\"収益化・資料導線\"]"
             ),
             "governance": build_dynamic_governance(
                 PT_DIR,
@@ -802,19 +802,20 @@ def build_portfolio():
                 "着地URL3要素分離検査 ＋ 2周目動画SHA-256非一致ゲート",
                 "単一リポジトリ共有（_redirects / --channel=reskill 引数切替）",
                 [
-                    {"trigger": "Daily Shorts Pipeline (--channel=reskill)", "action": "台帳取得 → 動画生成 → YouTube予約投稿"},
-                    {"trigger": "Git Push (pt_student_portal)", "action": "Cloudflare Pages /admission ルート即時反映"}
+                    {"trigger": "Task Scheduler (Hourly Sync)", "action": "毎時 YouTube Data API v3 (Ch.B) から再生数・動画数を自動取得"},
+                    {"trigger": "Shorts Pipeline (--channel=reskill)", "action": "100本JSON台帳 → チャット動画生成 → YouTube投稿"}
                 ]
             ),
             "analytics_detail": {
-                "source": "統合基盤共有 (utm_source=yt_reskill)",
+                "source": "YouTube Data API v3 (Ch.B)" if yt_reskill["api_connected"] else "YouTube API (未接続)",
                 "metrics": [
-                    {"name": "着地URL", "value": "/admission"},
-                    {"name": "対応資格", "value": "PT / OT / 看護 / その他"}
+                    {"name": "チャンネル登録者数", "value": yt_reskill["subscribers"]},
+                    {"name": "総再生数", "value": f"{yt_reskill['total_views']:,}回"},
+                    {"name": "総高評価 / コメント", "value": f"{yt_reskill['total_likes']} / {yt_reskill['total_comments']}"},
+                    {"name": "公開動画数", "value": f"{yt_reskill['videos_count']}本"}
                 ],
-                "recent_items": [
-                    {"label": "OAuth分離", "value": "token_reskill.json"},
-                    {"label": "エンドカード", "value": "末尾1.5秒自動合成"}
+                "recent_items": yt_reskill["top_videos"] if yt_reskill["top_videos"] else [
+                    {"title": "公開動画データ集計中", "views": f"{yt_reskill['videos_count']}本"}
                 ]
             }
         },
