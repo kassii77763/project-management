@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-18 00:54 JST",
+    "last_sync": "2026-11-18 01:54 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "25,023回",
+          "value": "24,908回",
           "delta": "39本公開"
         },
         {
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-18 00:54",
+        "updated_at": "2026-11-18 01:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +342,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "130回",
+          "value": "146回",
           "delta": "1本公開 / 登録0人"
         },
         {
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "130回"
+            "value": "146回"
           },
           {
             "name": "総高評価 / コメント",
@@ -410,7 +410,7 @@
         "recent_items": [
           {
             "title": "最大256万円の給付金、入学後すぐ振り込まれると思ってない？ #Shorts",
-            "views": "130回"
+            "views": "146回"
           }
         ]
       }
