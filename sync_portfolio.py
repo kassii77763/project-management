@@ -686,7 +686,7 @@ def build_portfolio():
         {
             "id": "pt-portal",
             "name": "とあるPT学生の学習帖",
-            "role": "メイン学習ポータル基盤",
+            "role": "現役PT学生・学習全般基盤（着地点A: / ・Ch.A）",
             "status": "運用中",
             "path": "projects/pt_student_portal",
             "url": "https://pt-student-portal.pages.dev",
@@ -730,6 +730,74 @@ def build_portfolio():
                     {"name": "詳細筋カルテ", "value": f"{pt_m['muscles_detail']}筋"}
                 ],
                 "recent_items": cf["referrers"]
+            }
+        },
+        {
+            "id": "medical-reskill-navi",
+            "name": "医療系リスキリング・入学ナビ",
+            "role": "社会人入学・給付金ナビ（着地点B: /admission ・Ch.B）",
+            "status": "運用構築中",
+            "path": "projects/pt_student_portal (/admission)",
+            "url": "https://pt-student-portal.pages.dev/admission",
+            "git": get_git_info(PT_DIR),
+            "last_updated_at": get_project_last_updated_at(PT_DIR),
+            "quick_links": [
+                {"label": "専用LP (/admission)", "url": "https://pt-student-portal.pages.dev/admission?utm_source=yt_reskill"},
+                {"label": "統合実装プラン", "url": "projects/pt_student_portal/docs/integration_plan.html"}
+            ],
+            "stack": ["Cloudflare Pages (/admission)", "Playwright 9:16", "FFmpeg", "Google Sheets API", "YouTube Data API v3"],
+            "harness": [
+                {"name": "着地URL・2チャンネルE2E検証 (harness/verify_dual_landing_and_channels.js)", "status": "PASS"},
+                {"name": "2周目SHA-256差分・1.5sエンドカード検査 (scripts/record_shorts_v2.js)", "status": "PASS"}
+            ],
+            "progress": {
+                "exists": True,
+                "updated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M"),
+                "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
+                "highlights": [
+                    "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
+                    "100本ネタ台帳 2周目フックリライト・色/BGMローテーション実装",
+                    "token_study.json / token_reskill.json OAuth分離対応完了"
+                ],
+                "next_actions": [
+                    "secrets/token_reskill.json のOAuth認証セットアップ",
+                    "Google Sheets 100本ネタ台帳のID (.env CH_RESKILL_GSHEET_ID) 設定",
+                    "note詳細ロードマップ記事URLの本番差し替え＆Cloudflare Pagesデプロイ"
+                ]
+            },
+            "north_star_kpis": [
+                {"label": "ネタサイクル設計", "value": "100本循環", "delta": "2周目自動リライト"},
+                {"label": "E2E防衛ゲート", "value": "100% PASS", "delta": "SHA-256差分検証済"}
+            ],
+            "mermaid_template": (
+                "flowchart TD\n"
+                "  GS[\"Sheets 100本台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(--channel=reskill)\"]\n"
+                "  REC -->|\"2周目リライト＋1.5sエンドカード\"| YT[\"upload_youtube.js\\n(token_reskill.json)\"]\n"
+                "  YT -->|\"?utm_source=yt_reskill\"| LP[\"/admission 専用3要素LP\"]\n"
+                "  LP -->|\"シミュレーター＋FAQ\"| NOTE[\"note 詳細ロードマップ\"]"
+            ),
+            "governance": build_dynamic_governance(
+                PT_DIR,
+                [
+                    {"name": "着地URL・2チャンネルE2E検証 (harness/verify_dual_landing_and_channels.js)", "status": "PASS"}
+                ],
+                "着地URL3要素分離検査 ＋ 2周目動画SHA-256非一致ゲート",
+                "単一リポジトリ共有（_redirects / --channel=reskill 引数切替）",
+                [
+                    {"trigger": "Daily Shorts Pipeline (--channel=reskill)", "action": "台帳取得 → 動画生成 → YouTube予約投稿"},
+                    {"trigger": "Git Push (pt_student_portal)", "action": "Cloudflare Pages /admission ルート即時反映"}
+                ]
+            ),
+            "analytics_detail": {
+                "source": "統合基盤共有 (utm_source=yt_reskill)",
+                "metrics": [
+                    {"name": "着地URL", "value": "/admission"},
+                    {"name": "対応資格", "value": "PT / OT / 看護 / その他"}
+                ],
+                "recent_items": [
+                    {"label": "OAuth分離", "value": "token_reskill.json"},
+                    {"label": "エンドカード", "value": "末尾1.5秒自動合成"}
+                ]
             }
         },
         {

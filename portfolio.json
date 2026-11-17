@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 14:54 JST",
-    "active_count": 5,
+    "last_sync": "2026-11-17 15:03 JST",
+    "active_count": 6,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
   },
@@ -130,7 +130,7 @@
     {
       "id": "pt-portal",
       "name": "とあるPT学生の学習帖",
-      "role": "メイン学習ポータル基盤",
+      "role": "現役PT学生・学習全般基盤（着地点A: / ・Ch.A）",
       "status": "運用中",
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
@@ -138,7 +138,7 @@
         "sha": "5842cd5",
         "last_commit_date": "2026-11-16"
       },
-      "last_updated_at": "2026-11-17T14:54:00+09:00",
+      "last_updated_at": "2026-11-17T15:01:48+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -229,8 +229,8 @@
             "rule": "実在スクリプト: harness/harness2-portal-adapter.js"
           },
           {
-            "name": "その他検証スクリプト（計16本）",
-            "rule": "harness/meta-harness.js, harness/verify_classmate_ux_and_ops.js, harness/verify_cold_start_compliance.js, harness/verify_mobile_bento_grid.js ..."
+            "name": "その他検証スクリプト（計17本）",
+            "rule": "harness/meta-harness.js, harness/verify_classmate_ux_and_ops.js, harness/verify_cold_start_compliance.js, harness/verify_dual_landing_and_channels.js ..."
           }
         ],
         "ops_pattern": "GitHub Actions 自動パイプライン ＋ Cloudflare Pages 即時反映 ＋ Task Scheduler",
@@ -281,6 +281,132 @@
           {
             "title": "localhost",
             "views": "10 PV"
+          }
+        ]
+      }
+    },
+    {
+      "id": "medical-reskill-navi",
+      "name": "医療系リスキリング・入学ナビ",
+      "role": "社会人入学・給付金ナビ（着地点B: /admission ・Ch.B）",
+      "status": "運用構築中",
+      "path": "projects/pt_student_portal (/admission)",
+      "url": "https://pt-student-portal.pages.dev/admission",
+      "git": {
+        "sha": "5842cd5",
+        "last_commit_date": "2026-11-16"
+      },
+      "last_updated_at": "2026-11-17T15:01:48+09:00",
+      "quick_links": [
+        {
+          "label": "専用LP (/admission)",
+          "url": "https://pt-student-portal.pages.dev/admission?utm_source=yt_reskill"
+        },
+        {
+          "label": "統合実装プラン",
+          "url": "projects/pt_student_portal/docs/integration_plan.html"
+        }
+      ],
+      "stack": [
+        "Cloudflare Pages (/admission)",
+        "Playwright 9:16",
+        "FFmpeg",
+        "Google Sheets API",
+        "YouTube Data API v3"
+      ],
+      "harness": [
+        {
+          "name": "着地URL・2チャンネルE2E検証 (harness/verify_dual_landing_and_channels.js)",
+          "status": "PASS"
+        },
+        {
+          "name": "2周目SHA-256差分・1.5sエンドカード検査 (scripts/record_shorts_v2.js)",
+          "status": "PASS"
+        }
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-17 15:03",
+        "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
+        "highlights": [
+          "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
+          "100本ネタ台帳 2周目フックリライト・色/BGMローテーション実装",
+          "token_study.json / token_reskill.json OAuth分離対応完了"
+        ],
+        "next_actions": [
+          "secrets/token_reskill.json のOAuth認証セットアップ",
+          "Google Sheets 100本ネタ台帳のID (.env CH_RESKILL_GSHEET_ID) 設定",
+          "note詳細ロードマップ記事URLの本番差し替え＆Cloudflare Pagesデプロイ"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "ネタサイクル設計",
+          "value": "100本循環",
+          "delta": "2周目自動リライト"
+        },
+        {
+          "label": "E2E防衛ゲート",
+          "value": "100% PASS",
+          "delta": "SHA-256差分検証済"
+        }
+      ],
+      "mermaid_template": "flowchart TD\n  GS[\"Sheets 100本台帳\"] -->|\"sheets_sync.js\"| REC[\"record_shorts_v2.js\\n(--channel=reskill)\"]\n  REC -->|\"2周目リライト＋1.5sエンドカード\"| YT[\"upload_youtube.js\\n(token_reskill.json)\"]\n  YT -->|\"?utm_source=yt_reskill\"| LP[\"/admission 専用3要素LP\"]\n  LP -->|\"シミュレーター＋FAQ\"| NOTE[\"note 詳細ロードマップ\"]",
+      "governance": {
+        "dev_pattern": "着地URL3要素分離検査 ＋ 2周目動画SHA-256非一致ゲート",
+        "dev_gates": [
+          {
+            "name": {
+              "name": "着地URL・2チャンネルE2E検証 (harness/verify_dual_landing_and_channels.js)",
+              "status": "PASS"
+            },
+            "rule": "実在スクリプト: harness/area7-qa-gate.js"
+          },
+          {
+            "name": "その他検証スクリプト（計17本）",
+            "rule": "harness/meta-harness.js, harness/verify_classmate_ux_and_ops.js, harness/verify_cold_start_compliance.js, harness/verify_dual_landing_and_channels.js ..."
+          }
+        ],
+        "ops_pattern": "単一リポジトリ共有（_redirects / --channel=reskill 引数切替）",
+        "ops_routines": [
+          {
+            "trigger": "GitHub Actions (manual)",
+            "action": ".github/workflows/autonomous-hill-climb.yml"
+          },
+          {
+            "trigger": "GitHub Actions (cron: 0 18 * * 6, manual)",
+            "action": ".github/workflows/autonomous-pipeline.yml"
+          },
+          {
+            "trigger": "Daily Shorts Pipeline (--channel=reskill)",
+            "action": "台帳取得 → 動画生成 → YouTube予約投稿"
+          },
+          {
+            "trigger": "Git Push (pt_student_portal)",
+            "action": "Cloudflare Pages /admission ルート即時反映"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "統合基盤共有 (utm_source=yt_reskill)",
+        "metrics": [
+          {
+            "name": "着地URL",
+            "value": "/admission"
+          },
+          {
+            "name": "対応資格",
+            "value": "PT / OT / 看護 / その他"
+          }
+        ],
+        "recent_items": [
+          {
+            "label": "OAuth分離",
+            "value": "token_reskill.json"
+          },
+          {
+            "label": "エンドカード",
+            "value": "末尾1.5秒自動合成"
           }
         ]
       }
