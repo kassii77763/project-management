@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 22:54 JST",
+    "last_sync": "2026-11-17 23:54 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "24,784回",
+          "value": "24,872回",
           "delta": "39本公開"
         },
         {
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "8496f9d",
+        "sha": "18198b6",
         "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T16:19:06+09:00",
+      "last_updated_at": "2026-11-17T23:53:59+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "8496f9d",
+        "sha": "18198b6",
         "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T16:19:06+09:00",
+      "last_updated_at": "2026-11-17T23:53:59+09:00",
       "quick_links": [
         {
           "label": "専用LP (/admission)",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-17 22:54",
+        "updated_at": "2026-11-17 23:54",
         "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
         "highlights": [
           "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
@@ -768,7 +768,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-17T16:41:03+09:00",
+      "last_updated_at": "2026-11-17T23:38:26+09:00",
       "quick_links": [],
       "stack": [
         "Python",
