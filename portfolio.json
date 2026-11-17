@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 11:54 JST",
+    "last_sync": "2026-11-17 12:54 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,8 +57,8 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "23,004回",
-          "delta": "36本公開"
+          "value": "23,315回",
+          "delta": "37本公開"
         },
         {
           "label": "チャンネル登録者",
@@ -100,7 +100,7 @@
         "metrics": [
           {
             "name": "公開動画数",
-            "value": "36本"
+            "value": "37本"
           },
           {
             "name": "総コメント",
@@ -110,7 +110,7 @@
         "recent_items": [
           {
             "title": "【PT国試予想】肘の後ろに付くこの筋肉はどっち？ #shorts #解剖学 #理学療法士",
-            "views": "1,709回"
+            "views": "1,710回"
           },
           {
             "title": "【PT国試予想】青い停止部に付く筋肉はどっち？ #shorts #解剖学 #理学療法士",
@@ -118,7 +118,7 @@
           },
           {
             "title": "【PT国試予想】骨盤を支えるこの筋肉はどっち？ #shorts #解剖学 #理学療法士",
-            "views": "1,359回"
+            "views": "1,361回"
           },
           {
             "title": "【PT国試予想】肩のてっぺんに付く筋肉はどっち？ #shorts #解剖学 #理学療法士",
