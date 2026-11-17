@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 09:54 JST",
+    "last_sync": "2026-11-17 10:06 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "22,995回",
+          "value": "23,000回",
           "delta": "36本公開"
         },
         {
@@ -151,6 +151,10 @@
         {
           "label": "Cloudflare",
           "url": "https://dash.cloudflare.com/"
+        },
+        {
+          "label": "Microsoft Clarity",
+          "url": "https://clarity.microsoft.com/projects/view/z2x7y3u61v/dashboard"
         },
         {
           "label": "AdSense",
@@ -424,6 +428,10 @@
         {
           "label": "クラスメイト限定ハブ",
           "url": "https://pt-student-portal.pages.dev/classmate.html"
+        },
+        {
+          "label": "Microsoft Clarity",
+          "url": "https://clarity.microsoft.com/projects/view/z2x7y3u61v/dashboard"
         },
         {
           "label": "YouTube Studio",
