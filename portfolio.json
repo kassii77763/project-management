@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 13:54 JST",
+    "last_sync": "2026-11-17 14:54 JST",
     "active_count": 5,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,13 +57,13 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "23,223回",
+          "value": "23,727回",
           "delta": "37本公開"
         },
         {
           "label": "チャンネル登録者",
           "value": "7人",
-          "delta": "高評価 74"
+          "delta": "高評価 75"
         }
       ],
       "mermaid_template": "flowchart TD\n  A[\"Z-Anatomy 3D素材 & 動画生成\"] --> G\n  subgraph G[\"並列品質ゲート (run_shorts_harness.py)\"]\n    B[\"deterministic_gate.py (OpenCV/FFmpeg)\"]\n    C[\"run_regression_tests.js (セーフゾーン)\"]\n  end\n  B -.->|\"FAIL 差し戻し\"| A\n  C -.->|\"FAIL 差し戻し\"| A\n  G -->|\"ALL PASS\"| D[\"YouTube Shorts\\n({{kpi_0}})\"]\n  D --> E[\"PT学生学習帖 (Web)\"]\n  D --> F[\"公式LINE 導線\"]",
@@ -138,7 +138,7 @@
         "sha": "5842cd5",
         "last_commit_date": "2026-11-16"
       },
-      "last_updated_at": "2026-11-17T13:24:31+09:00",
+      "last_updated_at": "2026-11-17T14:54:00+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "140人",
-          "delta": "深度 3.57 PV/人"
+          "value": "150人",
+          "delta": "深度 4.2 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "500 PV",
+          "value": "630 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -268,11 +268,11 @@
         "recent_items": [
           {
             "title": "サイト内回遊",
-            "views": "360 PV"
+            "views": "480 PV"
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "80 PV"
+            "views": "90 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
