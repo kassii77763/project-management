@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 20:54 JST",
+    "last_sync": "2026-11-17 21:54 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,8 +57,8 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "24,307回",
-          "delta": "38本公開"
+          "value": "24,664回",
+          "delta": "39本公開"
         },
         {
           "label": "チャンネル登録者",
@@ -100,7 +100,7 @@
         "metrics": [
           {
             "name": "公開動画数",
-            "value": "38本"
+            "value": "39本"
           },
           {
             "name": "総コメント",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-17 20:54",
+        "updated_at": "2026-11-17 21:54",
         "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
         "highlights": [
           "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
