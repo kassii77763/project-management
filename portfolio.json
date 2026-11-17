@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 15:03 JST",
+    "last_sync": "2026-11-17 15:54 JST",
     "active_count": 6,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "23,727回",
+          "value": "23,794回",
           "delta": "37本公開"
         },
         {
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "5842cd5",
-        "last_commit_date": "2026-11-16"
+        "sha": "ca4c246",
+        "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T15:01:48+09:00",
+      "last_updated_at": "2026-11-17T15:43:13+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "150人",
-          "delta": "深度 4.2 PV/人"
+          "value": "160人",
+          "delta": "深度 4.06 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "630 PV",
+          "value": "650 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -268,11 +268,11 @@
         "recent_items": [
           {
             "title": "サイト内回遊",
-            "views": "480 PV"
+            "views": "490 PV"
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "90 PV"
+            "views": "100 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "5842cd5",
-        "last_commit_date": "2026-11-16"
+        "sha": "ca4c246",
+        "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T15:01:48+09:00",
+      "last_updated_at": "2026-11-17T15:43:13+09:00",
       "quick_links": [
         {
           "label": "専用LP (/admission)",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-17 15:03",
+        "updated_at": "2026-11-17 15:54",
         "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
         "highlights": [
           "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
