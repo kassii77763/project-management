@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_sync": "2026-11-17 15:54 JST",
-    "active_count": 6,
+    "last_sync": "2026-11-17 16:41 JST",
+    "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
   },
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "23,794回",
+          "value": "23,968回",
           "delta": "37本公開"
         },
         {
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "ca4c246",
+        "sha": "8496f9d",
         "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T15:43:13+09:00",
+      "last_updated_at": "2026-11-17T16:19:06+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "ca4c246",
+        "sha": "8496f9d",
         "last_commit_date": "2026-11-17"
       },
-      "last_updated_at": "2026-11-17T15:43:13+09:00",
+      "last_updated_at": "2026-11-17T16:19:06+09:00",
       "quick_links": [
         {
           "label": "専用LP (/admission)",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-17 15:54",
+        "updated_at": "2026-11-17 16:41",
         "phase": "着地URL統合 ＆ 2チャンネル動画パイプラインE2E合格",
         "highlights": [
           "/admission 3要素LP（資格汎用シミュレーター・FAQ・note誘導）実装完了",
@@ -753,6 +753,99 @@
           {
             "title": "基本設計・提案書 (line_bot_proposal)",
             "views": "準備完了"
+          }
+        ]
+      }
+    },
+    {
+      "id": "auto-face-blur",
+      "name": "レッスン動画 自動顔ぼかし (Auto Face Blur)",
+      "role": "教室動画プライバシー保護・リール最適化",
+      "status": "稼働中",
+      "path": "projects/auto_face_blur",
+      "url": "#",
+      "git": {
+        "sha": "-",
+        "last_commit_date": "-"
+      },
+      "last_updated_at": "2026-11-17T16:41:03+09:00",
+      "quick_links": [],
+      "stack": [
+        "Python",
+        "Google Colab (T4 GPU)",
+        "YOLOv8-Face",
+        "YOLOv8m-Pose",
+        "OpenCV / FFmpeg"
+      ],
+      "harness": [
+        "決定論的品質ゲート (harness/deterministic_gate.py)",
+        "非決定論的視覚監査 (harness/non_deterministic_auditor.py)"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-17 16:39",
+        "phase": "Phase 2: 閉ループ品質保証ハーネス配備完了・2動画実機 PASS",
+        "highlights": [
+          "対象出力: G:\\マイドライブ\\auto_face_blur\\2_完成動画\\（2本処理済み・独立監査 ALL PASS）"
+        ],
+        "next_actions": [
+          "teacher_whitelist 運用時の先生顔写真登録と実写除外テスト",
+          "新規レッスン動画投入時の定期バッチ実行とハーネス自動検証"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "ハーネス合格動画",
+          "value": "2 / 2本",
+          "delta": "ALL_PASS"
+        },
+        {
+          "label": "推論・追従エンジン",
+          "value": "Face + Pose m",
+          "delta": "1280px GPU"
+        }
+      ],
+      "mermaid_template": "flowchart TD\n  IN[\"Google Drive 入力動画\"] --> GPU[\"Colab T4 GPU (Face + YOLOv8m-Pose)\"]\n  GPU --> D[\"deterministic_gate.py (ffprobe / Edge / YuNet)\"]\n  D -.->|\"FAIL 差し戻し (override)\"| IN\n  D -->|\"PASS\"| ND[\"non_deterministic_auditor.py (視覚監査)\"]\n  ND -.->|\"FAIL 差し戻し\"| IN\n  ND -->|\"{{kpi_1}}\"| OUT[\"2_完成動画\\n({{kpi_0}})\"]",
+      "governance": {
+        "dev_pattern": "閉ループ品質保証（決定論的5ゲート ＋ 非決定論的視覚監査 ＋ 差し戻し再出力）",
+        "dev_gates": [
+          {
+            "name": "決定論的品質ゲート (harness/deterministic_gate.py)",
+            "rule": "実在スクリプト: harness/deterministic_gate.py"
+          },
+          {
+            "name": "非決定論的視覚監査 (harness/non_deterministic_auditor.py)",
+            "rule": "実在スクリプト: harness/non_deterministic_auditor.py"
+          }
+        ],
+        "ops_pattern": "Google Colab MCP 実行 ＋ ローカルハーネス検証 (run_blur_harness.py)",
+        "ops_routines": [
+          {
+            "trigger": "動画投入時 (Colab + ローカルCLI)",
+            "action": "python harness/run_blur_harness.py で監査・FAIL時は harness_override.json 出力し再投入"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "Local Blur Harness Reports",
+        "metrics": [
+          {
+            "name": "ハーネス判定",
+            "value": "ALL_PASS"
+          },
+          {
+            "name": "合格動画数",
+            "value": "2 / 2本"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "YOLOv8-Face + YOLOv8m-Pose 2段階マッピング",
+            "views": "稼働中"
+          },
+          {
+            "title": "決定論的5ゲート + 非決定論的コンタクトシート監査",
+            "views": "稼働中"
           }
         ]
       }

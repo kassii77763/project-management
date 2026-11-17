@@ -14,6 +14,7 @@ MMT_DIR = os.path.join(PROJECTS_ROOT, "mmt_card_game")
 YT_DIR = os.path.join(PROJECTS_ROOT, "youtube_visual_library")
 STATS_DIR = os.path.join(PROJECTS_ROOT, "pt_stats_video_factory")
 LINE_DIR = os.path.join(PROJECTS_ROOT, "line_bot_proposal")
+BLUR_DIR = os.path.join(PROJECTS_ROOT, "auto_face_blur")
 ARCHIVE_DIR = os.path.join(PROJECTS_ROOT, "_archive")
 
 JST = timezone(timedelta(hours=9))
@@ -600,6 +601,18 @@ def build_portfolio():
     pt_m = scan_pt_portal_metrics()
     stats_m = scan_stats_factory_metrics()
 
+    blur_passed, blur_total, blur_status = 0, 0, "未計測"
+    blur_summary_path = os.path.join(BLUR_DIR, "harness", "reports", "harness_summary.json")
+    if os.path.exists(blur_summary_path):
+        try:
+            with open(blur_summary_path, "r", encoding="utf-8") as bf:
+                bd = json.load(bf)
+            blur_passed = bd.get("passed_count", 0)
+            blur_total = bd.get("video_count", 0)
+            blur_status = bd.get("status", "未計測")
+        except Exception:
+            pass
+
     archived_count = 0
     if os.path.exists(ARCHIVE_DIR):
         archived_count = sum(
@@ -631,6 +644,11 @@ def build_portfolio():
         LINE_DIR,
         ["LINE Messaging API", "GAS", "Instagram Reels"],
         ["Webhook疎通テスト (導入予定)"]
+    )
+    blur_stack, blur_harness = parse_agents_md_tags(
+        BLUR_DIR,
+        ["Python", "Google Colab (T4 GPU)", "YOLOv8-Face", "YOLOv8m-Pose", "OpenCV / FFmpeg"],
+        ["決定論的品質ゲート (harness/deterministic_gate.py)", "非決定論的視覚監査 (harness/non_deterministic_auditor.py)"]
     )
 
     projects = [
@@ -935,6 +953,53 @@ def build_portfolio():
                 ],
                 "recent_items": [
                     {"title": "基本設計・提案書 (line_bot_proposal)", "views": "準備完了"}
+                ]
+            }
+        },
+        {
+            "id": "auto-face-blur",
+            "name": "レッスン動画 自動顔ぼかし (Auto Face Blur)",
+            "role": "教室動画プライバシー保護・リール最適化",
+            "status": "稼働中",
+            "path": "projects/auto_face_blur",
+            "url": "#",
+            "git": get_git_info(BLUR_DIR),
+            "last_updated_at": get_project_last_updated_at(BLUR_DIR),
+            "quick_links": parse_quick_links(BLUR_DIR),
+            "stack": blur_stack,
+            "harness": blur_harness,
+            "progress": parse_progress_md(BLUR_DIR),
+            "north_star_kpis": [
+                {"label": "ハーネス合格動画", "value": f"{blur_passed} / {blur_total}本" if blur_total else "計測中", "delta": blur_status},
+                {"label": "推論・追従エンジン", "value": "Face + Pose m", "delta": "1280px GPU"}
+            ],
+            "mermaid_template": (
+                "flowchart TD\n"
+                "  IN[\"Google Drive 入力動画\"] --> GPU[\"Colab T4 GPU (Face + YOLOv8m-Pose)\"]\n"
+                "  GPU --> D[\"deterministic_gate.py (ffprobe / Edge / YuNet)\"]\n"
+                "  D -.->|\"FAIL 差し戻し (override)\"| IN\n"
+                "  D -->|\"PASS\"| ND[\"non_deterministic_auditor.py (視覚監査)\"]\n"
+                "  ND -.->|\"FAIL 差し戻し\"| IN\n"
+                "  ND -->|\"{{kpi_1}}\"| OUT[\"2_完成動画\\n({{kpi_0}})\"]"
+            ),
+            "governance": build_dynamic_governance(
+                BLUR_DIR,
+                blur_harness,
+                "閉ループ品質保証（決定論的5ゲート ＋ 非決定論的視覚監査 ＋ 差し戻し再出力）",
+                "Google Colab MCP 実行 ＋ ローカルハーネス検証 (run_blur_harness.py)",
+                [
+                    {"trigger": "動画投入時 (Colab + ローカルCLI)", "action": "python harness/run_blur_harness.py で監査・FAIL時は harness_override.json 出力し再投入"}
+                ]
+            ),
+            "analytics_detail": {
+                "source": "Local Blur Harness Reports",
+                "metrics": [
+                    {"name": "ハーネス判定", "value": blur_status},
+                    {"name": "合格動画数", "value": f"{blur_passed} / {blur_total}本"}
+                ],
+                "recent_items": [
+                    {"title": "YOLOv8-Face + YOLOv8m-Pose 2段階マッピング", "views": "稼働中"},
+                    {"title": "決定論的5ゲート + 非決定論的コンタクトシート監査", "views": "稼働中"}
                 ]
             }
         }
