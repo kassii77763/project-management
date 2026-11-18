@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-18 23:54 JST",
+    "last_sync": "2026-11-18 23:56 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-18 23:54",
+        "updated_at": "2026-11-18 23:56",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -343,7 +343,7 @@
         {
           "label": "YouTube 総再生数",
           "value": "210回",
-          "delta": "1本公開 / 登録0人"
+          "delta": "2本公開 / 登録0人"
         },
         {
           "label": "ネタ台帳 / 動画形式",
@@ -404,13 +404,17 @@
           },
           {
             "name": "公開動画数",
-            "value": "1本"
+            "value": "2本"
           }
         ],
         "recent_items": [
           {
             "title": "最大256万円の給付金、入学後すぐ振り込まれると思ってない？ #Shorts",
             "views": "210回"
+          },
+          {
+            "title": "夜間部で医療系資格を取りながら、月いくらまで稼げる？ #Shorts",
+            "views": "0回"
           }
         ]
       }
@@ -772,7 +776,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-18T09:51:04+09:00",
+      "last_updated_at": "2026-11-18T23:56:50+09:00",
       "quick_links": [],
       "stack": [
         "Python",
