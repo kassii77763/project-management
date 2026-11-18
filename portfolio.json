@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-18 08:54 JST",
+    "last_sync": "2026-11-18 09:54 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "25,286回",
+          "value": "25,287回",
           "delta": "39本公開"
         },
         {
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "09ea94f",
+        "sha": "f746764",
         "last_commit_date": "2026-11-18"
       },
-      "last_updated_at": "2026-11-18T00:13:41+09:00",
+      "last_updated_at": "2026-11-18T09:14:09+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "09ea94f",
+        "sha": "f746764",
         "last_commit_date": "2026-11-18"
       },
-      "last_updated_at": "2026-11-18T00:13:41+09:00",
+      "last_updated_at": "2026-11-18T09:14:09+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-18 08:54",
+        "updated_at": "2026-11-18 09:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -772,7 +772,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-18T00:26:02+09:00",
+      "last_updated_at": "2026-11-18T09:51:04+09:00",
       "quick_links": [],
       "stack": [
         "Python",
