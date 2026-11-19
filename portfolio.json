@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-19 14:41 JST",
+    "last_sync": "2026-11-19 14:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "90人",
-          "delta": "深度 8.33 PV/人"
+          "value": "160人",
+          "delta": "深度 4.06 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "750 PV",
+          "value": "650 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -268,18 +268,18 @@
         "recent_items": [
           {
             "title": "サイト内回遊",
-            "views": "660 PV"
+            "views": "490 PV"
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "70 PV"
-          },
-          {
-            "title": "kassii77763.github.io",
-            "views": "10 PV"
+            "views": "100 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
+            "views": "50 PV"
+          },
+          {
+            "title": "localhost",
             "views": "10 PV"
           }
         ]
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-19 14:41",
+        "updated_at": "2026-11-19 14:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -776,7 +776,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-19T14:41:52+09:00",
+      "last_updated_at": "2026-11-19T14:52:52+09:00",
       "quick_links": [],
       "stack": [
         "Python",
@@ -791,7 +791,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-19 14:38",
+        "updated_at": "2026-11-19 14:52",
         "phase": "Phase 3: お試しモニター運用開始（濱口さん / 月10本・スタバギフト券700円）＆ マルチクライアント自動化完成",
         "highlights": [
           "対象出力: 0_管理者向け/作業用/<クライアント>/A_検品待ち完成動画/（3本処理済み・独立監査 ALL PASS）→ 検品後 2_納品フォルダ/"
