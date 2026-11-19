@@ -15,6 +15,7 @@ YT_DIR = os.path.join(PROJECTS_ROOT, "youtube_visual_library")
 STATS_DIR = os.path.join(PROJECTS_ROOT, "pt_stats_video_factory")
 LINE_DIR = os.path.join(PROJECTS_ROOT, "line_bot_proposal")
 BLUR_DIR = os.path.join(PROJECTS_ROOT, "auto_face_blur")
+REHALOG_DIR = os.path.join(PROJECTS_ROOT, "rehalog-ai")
 ARCHIVE_DIR = os.path.join(PROJECTS_ROOT, "_archive")
 
 JST = timezone(timedelta(hours=9))
@@ -650,6 +651,11 @@ def build_portfolio():
         ["Python", "Google Colab (T4 GPU)", "YOLOv8-Face", "YOLOv8m-Pose", "OpenCV / FFmpeg"],
         ["決定論的品質ゲート (harness/deterministic_gate.py)", "非決定論的視覚監査 (harness/non_deterministic_auditor.py)"]
     )
+    rehalog_stack, rehalog_harness = parse_agents_md_tags(
+        REHALOG_DIR,
+        ["HTML / Tailwind CSS", "Web Speech API", "Google Colab MCP", "Gemini API (BFF予定)", "Cloudflare Workers (予定)"],
+        ["ローカルPIIリアルタイム検知＆自動匿名化ガード", "Playwright実ブラウザUI検証"]
+    )
 
     projects = [
         {
@@ -1001,6 +1007,52 @@ def build_portfolio():
                 "recent_items": [
                     {"title": "YOLOv8-Face + YOLOv8m-Pose 2段階マッピング", "views": "稼働中"},
                     {"title": "決定論的5ゲート + 非決定論的コンタクトシート監査", "views": "稼働中"}
+                ]
+            }
+        },
+        {
+            "id": "rehalog-ai",
+            "name": "RehaLog AI（リハロクAI）",
+            "role": "臨床実習 記録＆口頭試問AIコックピット（SaaS収益柱）",
+            "status": "プロトタイプ検証中",
+            "path": "projects/rehalog-ai",
+            "url": "#",
+            "git": get_git_info(REHALOG_DIR),
+            "last_updated_at": get_project_last_updated_at(REHALOG_DIR),
+            "quick_links": parse_quick_links(REHALOG_DIR),
+            "stack": rehalog_stack,
+            "harness": rehalog_harness,
+            "progress": parse_progress_md(REHALOG_DIR),
+            "north_star_kpis": [
+                {"label": "市場ペイン収集", "value": "115件 (PT 74.8%)", "delta": "深刻度4〜5: 56.5%"},
+                {"label": "収益ターゲット", "value": "月商30万円", "delta": "月額1,480円 / 2ヶ月2,980円"}
+            ],
+            "mermaid_template": (
+                "flowchart TD\n"
+                "  IN[\"帰り道スマホ音声入力 / 領域別チップ\"] --> PII[\"ローカルPIIガード＆自動匿名化\"]\n"
+                "  PII -->|\"安全確認済\"| AI[\"4種一括生成 (SOAP / ICF / 統合と解釈 / 鬼SV対策)\"]\n"
+                "  CM[\"Colab MCP 市場調査\\n({{kpi_0}})\"] -.->|\"ペイン反映\"| AI\n"
+                "  AI --> OUT[\"A4 PDF保存 / 指導者口頭試問突破\\n({{kpi_1}})\"]"
+            ),
+            "governance": build_dynamic_governance(
+                REHALOG_DIR,
+                rehalog_harness,
+                "ローカルPII隔離 ＋ 市場ペイン駆動UI改善ループ（Colab MCP連携）",
+                "プロトタイプ検証（Step 1: BFF＋Gemini本番接続 / Step 2: スマホ片手UX）",
+                [
+                    {"trigger": "市場リサーチ (Colab MCP)", "action": "research/colab_research_pipeline.py で知恵袋ペインを収集・構造化"},
+                    {"trigger": "UI変更時 (ブラウザ検証)", "action": "PII匿名化後の再検知防止と4種出力タブ切替を確認"}
+                ]
+            ),
+            "analytics_detail": {
+                "source": "Colab Market Research (N=115)",
+                "metrics": [
+                    {"name": "最大ペイン (SV・口頭試問)", "value": "44.3% (51件)"},
+                    {"name": "第2ペイン (統合と解釈)", "value": "20.9% (24件)"}
+                ],
+                "recent_items": [
+                    {"title": "prototype/rehalog-ai.html 実機ブラウザ検証", "views": "PASS"},
+                    {"title": "Yahoo!知恵袋 PT/OT/ST 115件ペイン構造化", "views": "完了"}
                 ]
             }
         }

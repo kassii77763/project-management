@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_sync": "2026-11-19 13:54 JST",
-    "active_count": 7,
+    "last_sync": "2026-11-19 14:37 JST",
+    "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
   },
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-19 13:54",
+        "updated_at": "2026-11-19 14:38",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +342,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "494回",
+          "value": "495回",
           "delta": "2本公開 / 登録0人"
         },
         {
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "494回"
+            "value": "495回"
           },
           {
             "name": "総高評価 / コメント",
@@ -410,7 +410,7 @@
         "recent_items": [
           {
             "title": "最大256万円の給付金、入学後すぐ振り込まれると思ってない？ #Shorts",
-            "views": "319回"
+            "views": "320回"
           },
           {
             "title": "夜間部で医療系資格を取りながら、月いくらまで稼げる？ #Shorts",
@@ -854,6 +854,107 @@
           {
             "title": "決定論的5ゲート + 非決定論的コンタクトシート監査",
             "views": "稼働中"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rehalog-ai",
+      "name": "RehaLog AI（リハロクAI）",
+      "role": "臨床実習 記録＆口頭試問AIコックピット（SaaS収益柱）",
+      "status": "プロトタイプ検証中",
+      "path": "projects/rehalog-ai",
+      "url": "#",
+      "git": {
+        "sha": "-",
+        "last_commit_date": "-"
+      },
+      "last_updated_at": "2026-11-19T14:37:40+09:00",
+      "quick_links": [],
+      "stack": [
+        "HTML / Tailwind CSS",
+        "Web Speech API",
+        "Google Colab MCP",
+        "Gemini API (BFF予定)",
+        "Cloudflare Workers (予定)"
+      ],
+      "harness": [
+        "ローカルPIIリアルタイム検知＆自動匿名化ガード",
+        "Playwright実ブラウザUI検証"
+      ],
+      "progress": {
+        "exists": true,
+        "updated_at": "2026-11-19 14:37",
+        "phase": "Phase: Phase 1: プロトタイプ検証完了 ＆ 115件市場リサーチに基づく本番API・スマホUX設計中",
+        "highlights": [
+          "Phase: Phase 1: プロトタイプ検証完了 ＆ 115件市場リサーチに基づく本番API・スマホUX設計中",
+          "プロジェクト基盤構築（AGENTS.md, prototype/rehalog-ai.html, research/colab_research_pipeline.py）",
+          "プロトタイプUI実ブラウザ検証完了（症例ストック、PIIリアルタイム検知＆自動匿名化バグ修正、4種一括出力、優しい先輩⇔鬼SV切替、A4 PDF印刷）",
+          "Google Colab MCP による市場ペイン115件収集・構造化完了（PT学生74.8% / 深刻度4〜5が56.5% / 最大ペイン: 口頭試問・SV対応44.3% & 統合と..."
+        ],
+        "next_actions": [
+          "Step 1: BFF中継（ローカル＋Cloudflare Workers）による本物の Gemini API 接続と、115件知見を組み込んだ「統合と解釈」「SV対策」プロンプト強化",
+          "Step 2: 帰り道のスマホ片手操作向けレスポンシブ化（入力／結果の1カラムタブ切替）",
+          "Step 3: 同期・先輩3〜5名での実地テスト ＆ ショート動画集客導線の接続"
+        ]
+      },
+      "north_star_kpis": [
+        {
+          "label": "市場ペイン収集",
+          "value": "115件 (PT 74.8%)",
+          "delta": "深刻度4〜5: 56.5%"
+        },
+        {
+          "label": "収益ターゲット",
+          "value": "月商30万円",
+          "delta": "月額1,480円 / 2ヶ月2,980円"
+        }
+      ],
+      "mermaid_template": "flowchart TD\n  IN[\"帰り道スマホ音声入力 / 領域別チップ\"] --> PII[\"ローカルPIIガード＆自動匿名化\"]\n  PII -->|\"安全確認済\"| AI[\"4種一括生成 (SOAP / ICF / 統合と解釈 / 鬼SV対策)\"]\n  CM[\"Colab MCP 市場調査\\n({{kpi_0}})\"] -.->|\"ペイン反映\"| AI\n  AI --> OUT[\"A4 PDF保存 / 指導者口頭試問突破\\n({{kpi_1}})\"]",
+      "governance": {
+        "dev_pattern": "ローカルPII隔離 ＋ 市場ペイン駆動UI改善ループ（Colab MCP連携）",
+        "dev_gates": [
+          {
+            "name": "ローカルPIIリアルタイム検知＆自動匿名化ガード",
+            "rule": "スクリプト未配備（導入予定）"
+          },
+          {
+            "name": "Playwright実ブラウザUI検証",
+            "rule": "スクリプト未配備（導入予定）"
+          }
+        ],
+        "ops_pattern": "プロトタイプ検証（Step 1: BFF＋Gemini本番接続 / Step 2: スマホ片手UX）",
+        "ops_routines": [
+          {
+            "trigger": "市場リサーチ (Colab MCP)",
+            "action": "research/colab_research_pipeline.py で知恵袋ペインを収集・構造化"
+          },
+          {
+            "trigger": "UI変更時 (ブラウザ検証)",
+            "action": "PII匿名化後の再検知防止と4種出力タブ切替を確認"
+          }
+        ]
+      },
+      "analytics_detail": {
+        "source": "Colab Market Research (N=115)",
+        "metrics": [
+          {
+            "name": "最大ペイン (SV・口頭試問)",
+            "value": "44.3% (51件)"
+          },
+          {
+            "name": "第2ペイン (統合と解釈)",
+            "value": "20.9% (24件)"
+          }
+        ],
+        "recent_items": [
+          {
+            "title": "prototype/rehalog-ai.html 実機ブラウザ検証",
+            "views": "PASS"
+          },
+          {
+            "title": "Yahoo!知恵袋 PT/OT/ST 115件ペイン構造化",
+            "views": "完了"
           }
         ]
       }
