@@ -603,10 +603,10 @@ def build_portfolio():
     stats_m = scan_stats_factory_metrics()
 
     blur_passed, blur_total, blur_status = 0, 0, "未計測"
-    blur_summary_path = os.path.join(BLUR_DIR, "harness", "reports", "harness_summary.json")
-    if os.path.exists(blur_summary_path):
+    blur_report_path = os.path.join(BLUR_DIR, "harness", "reports", "deterministic_report.json")
+    if os.path.exists(blur_report_path):
         try:
-            with open(blur_summary_path, "r", encoding="utf-8") as bf:
+            with open(blur_report_path, "r", encoding="utf-8") as bf:
                 bd = json.load(bf)
             blur_passed = bd.get("passed_count", 0)
             blur_total = bd.get("video_count", 0)
@@ -982,12 +982,11 @@ def build_portfolio():
             ],
             "mermaid_template": (
                 "flowchart TD\n"
-                "  IN[\"Google Drive 入力動画\"] --> GPU[\"Colab T4 GPU (Face + YOLOv8m-Pose)\"]\n"
-                "  GPU --> D[\"deterministic_gate.py (ffprobe / Edge / YuNet)\"]\n"
-                "  D -.->|\"FAIL 差し戻し (override)\"| IN\n"
-                "  D -->|\"PASS\"| ND[\"non_deterministic_auditor.py (視覚監査)\"]\n"
-                "  ND -.->|\"FAIL 差し戻し\"| IN\n"
-                "  ND -->|\"{{kpi_1}}\"| OUT[\"2_完成動画\\n({{kpi_0}})\"]"
+                "  IN[\"1_ここに動画を入れる\\n(GAS 2時間おき監視)\"] --> GPU[\"Colab T4 GPU\\n(Face + Pose + 自動衣装学習)\"]\n"
+                "  GPU --> OUT_A[\"A_検品待ち完成動画\"]\n"
+                "  OUT_A --> H[\"ハーネス検査 (run_blur_harness.py)\\n({{kpi_0}} / {{kpi_1}})\"]\n"
+                "  H -.->|\"FAIL 差し戻し\"| IN\n"
+                "  H -->|\"PASS・目視確認OK\"| DELIV[\"2_納品フォルダ\\n(GAS 15分おき→クライアント通知)\"]"
             ),
             "governance": build_dynamic_governance(
                 BLUR_DIR,
