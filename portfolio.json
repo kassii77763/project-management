@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-19 10:54 JST",
+    "last_sync": "2026-11-19 11:54 JST",
     "active_count": 7,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "f746764",
-        "last_commit_date": "2026-11-18"
+        "sha": "33f65b7",
+        "last_commit_date": "2026-11-19"
       },
-      "last_updated_at": "2026-11-18T23:53:14+09:00",
+      "last_updated_at": "2026-11-19T11:22:42+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "f746764",
-        "last_commit_date": "2026-11-18"
+        "sha": "33f65b7",
+        "last_commit_date": "2026-11-19"
       },
-      "last_updated_at": "2026-11-18T23:53:14+09:00",
+      "last_updated_at": "2026-11-19T11:22:42+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-19 10:54",
+        "updated_at": "2026-11-19 11:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +342,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "489回",
+          "value": "494回",
           "delta": "2本公開 / 登録0人"
         },
         {
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "489回"
+            "value": "494回"
           },
           {
             "name": "総高評価 / コメント",
@@ -414,7 +414,7 @@
           },
           {
             "title": "夜間部で医療系資格を取りながら、月いくらまで稼げる？ #Shorts",
-            "views": "170回"
+            "views": "175回"
           }
         ]
       }
@@ -776,7 +776,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-19T10:52:19+09:00",
+      "last_updated_at": "2026-11-19T11:33:32+09:00",
       "quick_links": [],
       "stack": [
         "Python",
