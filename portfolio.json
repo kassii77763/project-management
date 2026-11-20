@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-20 08:54 JST",
+    "last_sync": "2026-11-20 09:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "33f65b7",
-        "last_commit_date": "2026-11-19"
+        "sha": "90ea096",
+        "last_commit_date": "2026-11-20"
       },
-      "last_updated_at": "2026-11-19T17:30:19+09:00",
+      "last_updated_at": "2026-11-20T09:42:47+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -293,10 +293,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "33f65b7",
-        "last_commit_date": "2026-11-19"
+        "sha": "90ea096",
+        "last_commit_date": "2026-11-20"
       },
-      "last_updated_at": "2026-11-19T17:30:19+09:00",
+      "last_updated_at": "2026-11-20T09:42:47+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-20 08:54",
+        "updated_at": "2026-11-20 09:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -343,7 +343,7 @@
         {
           "label": "YouTube 総再生数",
           "value": "837回",
-          "delta": "4本公開 / 登録0人"
+          "delta": "4本公開 / 登録1人"
         },
         {
           "label": "ネタ台帳 / 動画形式",
@@ -392,7 +392,7 @@
         "metrics": [
           {
             "name": "チャンネル登録者数",
-            "value": "0人"
+            "value": "1人"
           },
           {
             "name": "総再生数",
@@ -561,7 +561,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-20T00:26:03+09:00",
+      "last_updated_at": "2026-11-20T09:43:18+09:00",
       "quick_links": [
         {
           "label": "統計学 講義・例題攻略ハブ",
@@ -610,8 +610,8 @@
       "north_star_kpis": [
         {
           "label": "ハーネス完遂動画",
-          "value": "47 / 50本",
-          "delta": "REJECT 3件"
+          "value": "50 / 50本",
+          "delta": "REJECT 0件"
         },
         {
           "label": "AI審判平均スコア",
