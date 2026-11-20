@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-20 23:54 JST",
+    "last_sync": "2026-11-21 00:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -17,7 +17,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-16T14:09:05+09:00",
+      "last_updated_at": "2026-11-20T23:56:21+09:00",
       "quick_links": [
         {
           "label": "YouTube チャンネル",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-20 23:54",
+        "updated_at": "2026-11-21 00:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +342,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "1,392回",
+          "value": "1,408回",
           "delta": "6本公開 / 登録1人"
         },
         {
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "1,392回"
+            "value": "1,408回"
           },
           {
             "name": "総高評価 / コメント",
@@ -418,11 +418,11 @@
           },
           {
             "title": "3年制と4年制、給付金の上限はそれぞれいくら違う？ #Shorts",
-            "views": "237回"
+            "views": "252回"
           },
           {
             "title": "パンフレットの「国試合格率98%」をそのまま信じてはいけない理由 #Shorts",
-            "views": "180回"
+            "views": "181回"
           }
         ]
       }
