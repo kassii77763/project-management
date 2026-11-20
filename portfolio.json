@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-20 12:54 JST",
+    "last_sync": "2026-11-20 13:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-20 12:54",
+        "updated_at": "2026-11-20 13:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +342,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "841回",
+          "value": "847回",
           "delta": "4本公開 / 登録1人"
         },
         {
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "841回"
+            "value": "847回"
           },
           {
             "name": "総高評価 / コメント",
@@ -414,11 +414,11 @@
           },
           {
             "title": "パンフレットの「国試合格率98%」をそのまま信じてはいけない理由 #Shorts",
-            "views": "175回"
+            "views": "180回"
           },
           {
             "title": "夜間部で医療系資格を取りながら、月いくらまで稼げる？ #Shorts",
-            "views": "175回"
+            "views": "176回"
           },
           {
             "title": "会社辞めた1年目の住民税と国保、想像の2倍請求されます #Shorts",
