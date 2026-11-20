@@ -1,9 +1,9 @@
 {
   "meta": {
-    "last_sync": "2026-11-21 01:54 JST",
+    "last_sync": "2026-11-21 02:54 JST",
     "active_count": 8,
     "archived_count": 15,
-    "harness_gate_status": "Exit Code 0 (ALL PASS)"
+    "harness_gate_status": "WARN: CF_ERROR"
   },
   "projects": [
     {
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "170人",
-          "delta": "深度 4.0 PV/人"
+          "value": "0人",
+          "delta": "深度 0 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "680 PV",
+          "value": "0 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -254,7 +254,7 @@
         ]
       },
       "analytics_detail": {
-        "source": "Cloudflare GraphQL (ALL_PASS_LIVE)",
+        "source": "Cloudflare GraphQL (ERROR)",
         "metrics": [
           {
             "name": "登録養成校",
@@ -265,24 +265,7 @@
             "value": "80筋"
           }
         ],
-        "recent_items": [
-          {
-            "title": "サイト内回遊",
-            "views": "510 PV"
-          },
-          {
-            "title": "Direct / ブックマーク",
-            "views": "110 PV"
-          },
-          {
-            "title": "YouTube (Shorts導線)",
-            "views": "50 PV"
-          },
-          {
-            "title": "localhost",
-            "views": "10 PV"
-          }
-        ]
+        "recent_items": []
       }
     },
     {
@@ -326,7 +309,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-21 01:54",
+        "updated_at": "2026-11-21 02:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,7 +325,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "1,408回",
+          "value": "1,492回",
           "delta": "6本公開 / 登録1人"
         },
         {
@@ -396,7 +379,7 @@
           },
           {
             "name": "総再生数",
-            "value": "1,408回"
+            "value": "1,492回"
           },
           {
             "name": "総高評価 / コメント",
@@ -414,7 +397,7 @@
           },
           {
             "title": "専門実践教育訓練給付金、入学1ヶ月前を過ぎると1円も出ません #Shorts",
-            "views": "308回"
+            "views": "391回"
           },
           {
             "title": "3年制と4年制、給付金の上限はそれぞれいくら違う？ #Shorts",
