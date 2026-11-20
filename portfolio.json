@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-20 16:54 JST",
+    "last_sync": "2026-11-20 17:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -138,7 +138,7 @@
         "sha": "90ea096",
         "last_commit_date": "2026-11-20"
       },
-      "last_updated_at": "2026-11-20T09:42:47+09:00",
+      "last_updated_at": "2026-11-20T17:30:19+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -296,7 +296,7 @@
         "sha": "90ea096",
         "last_commit_date": "2026-11-20"
       },
-      "last_updated_at": "2026-11-20T09:42:47+09:00",
+      "last_updated_at": "2026-11-20T17:30:19+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-20 16:54",
+        "updated_at": "2026-11-20 17:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
