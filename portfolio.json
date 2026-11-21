@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-21 17:54 JST",
+    "last_sync": "2026-11-21 18:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "170人",
-          "delta": "深度 4.0 PV/人"
+          "value": "100人",
+          "delta": "深度 7.7 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "680 PV",
+          "value": "770 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -268,18 +268,18 @@
         "recent_items": [
           {
             "title": "サイト内回遊",
-            "views": "510 PV"
+            "views": "670 PV"
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "110 PV"
+            "views": "70 PV"
+          },
+          {
+            "title": "kassii77763.github.io",
+            "views": "10 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
-            "views": "50 PV"
-          },
-          {
-            "title": "localhost",
             "views": "10 PV"
           }
         ]
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-21 17:54",
+        "updated_at": "2026-11-21 18:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
