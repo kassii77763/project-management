@@ -1,9 +1,9 @@
 {
   "meta": {
-    "last_sync": "2026-11-22 14:54 JST",
+    "last_sync": "2026-11-22 15:54 JST",
     "active_count": 8,
     "archived_count": 15,
-    "harness_gate_status": "WARN: CF_ERROR"
+    "harness_gate_status": "Exit Code 0 (ALL PASS)"
   },
   "projects": [
     {
@@ -199,12 +199,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "0人",
-          "delta": "深度 0 PV/人"
+          "value": "170人",
+          "delta": "深度 4.0 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "0 PV",
+          "value": "680 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -254,7 +254,7 @@
         ]
       },
       "analytics_detail": {
-        "source": "Cloudflare GraphQL (ERROR)",
+        "source": "Cloudflare GraphQL (ALL_PASS_LIVE)",
         "metrics": [
           {
             "name": "登録養成校",
@@ -265,7 +265,24 @@
             "value": "80筋"
           }
         ],
-        "recent_items": []
+        "recent_items": [
+          {
+            "title": "サイト内回遊",
+            "views": "510 PV"
+          },
+          {
+            "title": "Direct / ブックマーク",
+            "views": "110 PV"
+          },
+          {
+            "title": "YouTube (Shorts導線)",
+            "views": "50 PV"
+          },
+          {
+            "title": "localhost",
+            "views": "10 PV"
+          }
+        ]
       }
     },
     {
@@ -309,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-22 14:54",
+        "updated_at": "2026-11-22 15:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
