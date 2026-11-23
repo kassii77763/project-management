@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-23 15:54 JST",
+    "last_sync": "2026-11-23 16:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-23 15:54",
+        "updated_at": "2026-11-23 16:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -877,7 +877,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-23T15:53:40+09:00",
+      "last_updated_at": "2026-11-23T16:41:13+09:00",
       "quick_links": [],
       "stack": [
         "HTML / Tailwind CSS",
@@ -892,18 +892,18 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-19 14:38",
-        "phase": "Phase: Phase 1: プロトタイプ検証完了 ＆ 115件市場リサーチに基づく本番API・スマホUX設計中",
+        "updated_at": "2026-11-23 16:33",
+        "phase": "Phase: Phase 2: ローカルBFF＋Gemini実接続・臨床思考/ICF継承・提出用PDF3パターン・クリスタルUI確定 → Red Team監査＆本番デプロイ準備",
         "highlights": [
-          "Phase: Phase 1: プロトタイプ検証完了 ＆ 115件市場リサーチに基づく本番API・スマホUX設計中",
-          "プロジェクト基盤構築（AGENTS.md, prototype/rehalog-ai.html, research/colab_research_pipeline.py）",
-          "プロトタイプUI実ブラウザ検証完了（症例ストック、PIIリアルタイム検知＆自動匿名化バグ修正、4種一括出力、優しい先輩⇔鬼SV切替、A4 PDF印刷）",
-          "Google Colab MCP による市場ペイン115件収集・構造化完了（PT学生74.8% / 深刻度4〜5が56.5% / 最大ペイン: 口頭試問・SV対応44.3% & 統合と..."
+          "Phase: Phase 2: ローカルBFF＋Gemini実接続・臨床思考/ICF継承・提出用PDF3パターン・クリスタルUI確定 → Red Team監査＆本番デプロイ準備",
+          "最終更新: 2026-11-23",
+          "基盤 ＆ 市場リサーチ:",
+          "AGENTS.md、research/colab_research_pipeline.py、Google Colab MCP による市場ペイン115件構造化完了。"
         ],
         "next_actions": [
-          "Step 1: BFF中継（ローカル＋Cloudflare Workers）による本物の Gemini API 接続と、115件知見を組み込んだ「統合と解釈」「SV対策」プロンプト強化",
-          "Step 2: 帰り道のスマホ片手操作向けレスポンシブ化（入力／結果の1カラムタブ切替）",
-          "Step 3: 同期・先輩3〜5名での実地テスト ＆ ショート動画集客導線の接続"
+          "Step 1: Red Team 敵対的監査（セキュリティ / PII / 臨床ロジック / UI・印刷エッジケース）の実施とCritical/High項目の潰し込み",
+          "Step 2: 同期・先輩3〜5名での実地テスト（スマホ／PC）＆ フィードバック反映",
+          "Step 3: Cloudflare Workers 等への本番BFF移植・公開導線の接続"
         ]
       },
       "north_star_kpis": [
