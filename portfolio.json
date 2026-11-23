@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-23 10:54 JST",
+    "last_sync": "2026-11-23 11:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -57,7 +57,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "25,338回",
+          "value": "25,339回",
           "delta": "39本公開"
         },
         {
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-23 10:54",
+        "updated_at": "2026-11-23 11:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
