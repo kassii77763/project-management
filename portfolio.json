@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-23 20:54 JST",
+    "last_sync": "2026-11-23 23:19 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -326,7 +326,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-23 20:54",
+        "updated_at": "2026-11-23 23:19",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -342,8 +342,8 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "1,838回",
-          "delta": "11本公開 / 登録1人"
+          "value": "2,076回",
+          "delta": "12本公開 / 登録1人"
         },
         {
           "label": "ネタ台帳 / 動画形式",
@@ -396,7 +396,7 @@
           },
           {
             "name": "総再生数",
-            "value": "1,838回"
+            "value": "2,076回"
           },
           {
             "name": "総高評価 / コメント",
@@ -404,7 +404,7 @@
           },
           {
             "name": "公開動画数",
-            "value": "11本"
+            "value": "12本"
           }
         ],
         "recent_items": [
@@ -417,12 +417,12 @@
             "views": "383回"
           },
           {
-            "title": "3年制と4年制、給付金の上限はそれぞれいくら違う？ #Shorts",
-            "views": "273回"
+            "title": "学費320万円と書いてある学校、実際はプラス50万円かかります #Shorts",
+            "views": "278回"
           },
           {
-            "title": "パンフレットの「国試合格率98%」をそのまま信じてはいけない理由 #Shorts",
-            "views": "182回"
+            "title": "3年制と4年制、給付金の上限はそれぞれいくら違う？ #Shorts",
+            "views": "273回"
           }
         ]
       }
