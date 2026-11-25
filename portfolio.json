@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-25 11:00 JST",
+    "last_sync": "2026-11-25 11:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 11:00",
+        "updated_at": "2026-11-25 11:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -878,7 +878,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-25T10:59:55+09:00",
+      "last_updated_at": "2026-11-25T11:00:47+09:00",
       "quick_links": [],
       "stack": [
         "HTML / Tailwind CSS",
