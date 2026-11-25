@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-25 21:54 JST",
+    "last_sync": "2026-11-25 22:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -200,12 +200,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "190人",
-          "delta": "深度 3.68 PV/人"
+          "value": "200人",
+          "delta": "深度 3.55 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "700 PV",
+          "value": "710 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -273,7 +273,7 @@
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "130 PV"
+            "views": "140 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 21:54",
+        "updated_at": "2026-11-25 22:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -343,7 +343,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "2,406回",
+          "value": "2,438回",
           "delta": "16本公開 / 登録1人"
         },
         {
@@ -397,11 +397,11 @@
           },
           {
             "name": "総再生数",
-            "value": "2,406回"
+            "value": "2,438回"
           },
           {
             "name": "総高評価 / コメント",
-            "value": "0 / 0"
+            "value": "1 / 0"
           },
           {
             "name": "公開動画数",
