@@ -1013,9 +1013,9 @@ def build_portfolio():
             "id": "rehalog-ai",
             "name": "RehaLog AI（リハロクAI）",
             "role": "臨床実習 記録＆口頭試問AIコックピット（SaaS収益柱）",
-            "status": "プロトタイプ検証中",
+            "status": "本番公開中 (Cloudflare Workers)",
             "path": "projects/rehalog-ai",
-            "url": "#",
+            "url": "https://rehalog-ai.kasima-kazuki.workers.dev",
             "git": get_git_info(REHALOG_DIR),
             "last_updated_at": get_project_last_updated_at(REHALOG_DIR),
             "quick_links": parse_quick_links(REHALOG_DIR),
@@ -1037,21 +1037,21 @@ def build_portfolio():
                 REHALOG_DIR,
                 rehalog_harness,
                 "ローカルPII隔離 ＋ 市場ペイン駆動UI改善ループ（Colab MCP連携）",
-                "プロトタイプ検証（Step 1: BFF＋Gemini本番接続 / Step 2: スマホ片手UX）",
+                "本番公開済み（Cloudflare Workers BFF＋クリスタルUI＋SV対策5問＋PDF3様式＋ICF引き継ぎ3モード）",
                 [
                     {"trigger": "市場リサーチ (Colab MCP)", "action": "research/colab_research_pipeline.py で知恵袋ペインを収集・構造化"},
-                    {"trigger": "UI変更時 (ブラウザ検証)", "action": "PII匿名化後の再検知防止と4種出力タブ切替を確認"}
+                    {"trigger": "本番デプロイ (Workers)", "action": "public/index.html 同期後に npx wrangler deploy で即時更新"}
                 ]
             ),
             "analytics_detail": {
-                "source": "Colab Market Research (N=115)",
+                "source": "Colab Market Research (N=115) & Workers Prod",
                 "metrics": [
                     {"name": "最大ペイン (SV・口頭試問)", "value": "44.3% (51件)"},
                     {"name": "第2ペイン (統合と解釈)", "value": "20.9% (24件)"}
                 ],
                 "recent_items": [
-                    {"title": "prototype/rehalog-ai.html 実機ブラウザ検証", "views": "PASS"},
-                    {"title": "Yahoo!知恵袋 PT/OT/ST 115件ペイン構造化", "views": "完了"}
+                    {"title": "Cloudflare Workers 本番公開 (rehalog-ai.kasima-kazuki.workers.dev)", "views": "稼働中"},
+                    {"title": "Red Team監査・PII多層防御・並列2分割生成", "views": "PASS"}
                 ]
             }
         }

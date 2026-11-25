@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-25 10:54 JST",
+    "last_sync": "2026-11-25 11:00 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 10:54",
+        "updated_at": "2026-11-25 11:00",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -343,7 +343,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "2,369回",
+          "value": "2,370回",
           "delta": "14本公開 / 登録1人"
         },
         {
@@ -397,7 +397,7 @@
           },
           {
             "name": "総再生数",
-            "value": "2,369回"
+            "value": "2,370回"
           },
           {
             "name": "総高評価 / コメント",
@@ -871,14 +871,14 @@
       "id": "rehalog-ai",
       "name": "RehaLog AI（リハロクAI）",
       "role": "臨床実習 記録＆口頭試問AIコックピット（SaaS収益柱）",
-      "status": "プロトタイプ検証中",
+      "status": "本番公開中 (Cloudflare Workers)",
       "path": "projects/rehalog-ai",
-      "url": "#",
+      "url": "https://rehalog-ai.kasima-kazuki.workers.dev",
       "git": {
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-24T23:55:15+09:00",
+      "last_updated_at": "2026-11-25T10:59:55+09:00",
       "quick_links": [],
       "stack": [
         "HTML / Tailwind CSS",
@@ -893,13 +893,13 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-23 16:33",
-        "phase": "Phase: Phase 2: ローカルBFF＋Gemini実接続・臨床思考/ICF継承・提出用PDF3パターン・クリスタルUI確定 → Red Team監査＆本番デプロイ準備",
+        "updated_at": "2026-11-25 10:59",
+        "phase": "Phase: Phase 3: Cloudflare Workers 本番公開中（https://rehalog-ai.kasima-kazuki.workers.dev）",
         "highlights": [
-          "Phase: Phase 2: ローカルBFF＋Gemini実接続・臨床思考/ICF継承・提出用PDF3パターン・クリスタルUI確定 → Red Team監査＆本番デプロイ準備",
-          "最終更新: 2026-11-23",
-          "基盤 ＆ 市場リサーチ:",
-          "AGENTS.md、research/colab_research_pipeline.py、Google Colab MCP による市場ペイン115件構造化完了。"
+          "Phase: Phase 3: Cloudflare Workers 本番公開中（https://rehalog-ai.kasima-kazuki.workers.dev）",
+          "最終更新: 2026-11-25",
+          "本番環境デプロイ (worker.js + wrangler.toml + public/index.html):",
+          "Cloudflare Workers へ BFF ＆ 静的UIを統合デプロイ完了（https://rehalog-ai.kasima-kazuki.workers.dev）。"
         ],
         "next_actions": [
           "Step 1: Red Team 敵対的監査（セキュリティ / PII / 臨床ロジック / UI・印刷エッジケース）の実施とCritical/High項目の潰し込み",
@@ -932,20 +932,20 @@
             "rule": "スクリプト未配備（導入予定）"
           }
         ],
-        "ops_pattern": "プロトタイプ検証（Step 1: BFF＋Gemini本番接続 / Step 2: スマホ片手UX）",
+        "ops_pattern": "本番公開済み（Cloudflare Workers BFF＋クリスタルUI＋SV対策5問＋PDF3様式＋ICF引き継ぎ3モード）",
         "ops_routines": [
           {
             "trigger": "市場リサーチ (Colab MCP)",
             "action": "research/colab_research_pipeline.py で知恵袋ペインを収集・構造化"
           },
           {
-            "trigger": "UI変更時 (ブラウザ検証)",
-            "action": "PII匿名化後の再検知防止と4種出力タブ切替を確認"
+            "trigger": "本番デプロイ (Workers)",
+            "action": "public/index.html 同期後に npx wrangler deploy で即時更新"
           }
         ]
       },
       "analytics_detail": {
-        "source": "Colab Market Research (N=115)",
+        "source": "Colab Market Research (N=115) & Workers Prod",
         "metrics": [
           {
             "name": "最大ペイン (SV・口頭試問)",
@@ -958,12 +958,12 @@
         ],
         "recent_items": [
           {
-            "title": "prototype/rehalog-ai.html 実機ブラウザ検証",
-            "views": "PASS"
+            "title": "Cloudflare Workers 本番公開 (rehalog-ai.kasima-kazuki.workers.dev)",
+            "views": "稼働中"
           },
           {
-            "title": "Yahoo!知恵袋 PT/OT/ST 115件ペイン構造化",
-            "views": "完了"
+            "title": "Red Team監査・PII多層防御・並列2分割生成",
+            "views": "PASS"
           }
         ]
       }
