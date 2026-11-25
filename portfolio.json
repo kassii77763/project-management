@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-25 11:54 JST",
+    "last_sync": "2026-11-25 13:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 11:54",
+        "updated_at": "2026-11-25 13:55",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -562,7 +562,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-23T00:03:21+09:00",
+      "last_updated_at": "2026-11-25T13:56:27+09:00",
       "quick_links": [
         {
           "label": "統計学 講義・例題攻略ハブ",
@@ -663,20 +663,20 @@
         ],
         "recent_items": [
           {
+            "title": "動画ID: EX-7A",
+            "views": "0/100 (UNKNOWN)"
+          },
+          {
+            "title": "動画ID: EX-2B",
+            "views": "0/100 (UNKNOWN)"
+          },
+          {
             "title": "動画ID: 5-4",
             "views": "98/100 (PASS)"
           },
           {
             "title": "動画ID: 2-4",
             "views": "97/100 (PASS)"
-          },
-          {
-            "title": "動画ID: 2-3",
-            "views": "94/100 (PASS)"
-          },
-          {
-            "title": "動画ID: 2-2",
-            "views": "95/100 (PASS)"
           }
         ]
       }
@@ -878,7 +878,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-25T11:00:47+09:00",
+      "last_updated_at": "2026-11-25T13:26:08+09:00",
       "quick_links": [],
       "stack": [
         "HTML / Tailwind CSS",
@@ -893,7 +893,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 10:59",
+        "updated_at": "2026-11-25 12:52",
         "phase": "Phase: Phase 3: Cloudflare Workers 本番公開中（https://rehalog-ai.kasima-kazuki.workers.dev）",
         "highlights": [
           "Phase: Phase 3: Cloudflare Workers 本番公開中（https://rehalog-ai.kasima-kazuki.workers.dev）",
