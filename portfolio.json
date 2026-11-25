@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-25 22:54 JST",
+    "last_sync": "2026-11-25 23:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "5f1db86",
+        "sha": "27ab8db",
         "last_commit_date": "2026-11-25"
       },
-      "last_updated_at": "2026-11-25T17:30:03+09:00",
+      "last_updated_at": "2026-11-25T23:46:14+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -200,12 +200,12 @@
       "north_star_kpis": [
         {
           "label": "ユニーク訪問 (CF)",
-          "value": "200人",
-          "delta": "深度 3.55 PV/人"
+          "value": "210人",
+          "delta": "深度 3.43 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "710 PV",
+          "value": "720 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -273,7 +273,7 @@
           },
           {
             "title": "Direct / ブックマーク",
-            "views": "140 PV"
+            "views": "150 PV"
           },
           {
             "title": "YouTube (Shorts導線)",
@@ -294,10 +294,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "5f1db86",
+        "sha": "27ab8db",
         "last_commit_date": "2026-11-25"
       },
-      "last_updated_at": "2026-11-25T17:30:03+09:00",
+      "last_updated_at": "2026-11-25T23:46:14+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-25 22:54",
+        "updated_at": "2026-11-25 23:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
@@ -343,7 +343,7 @@
       "north_star_kpis": [
         {
           "label": "YouTube 総再生数",
-          "value": "2,438回",
+          "value": "2,442回",
           "delta": "16本公開 / 登録1人"
         },
         {
@@ -397,7 +397,7 @@
           },
           {
             "name": "総再生数",
-            "value": "2,438回"
+            "value": "2,442回"
           },
           {
             "name": "総高評価 / コメント",
@@ -439,7 +439,7 @@
         "sha": "a309ee6",
         "last_commit_date": "2026-11-16"
       },
-      "last_updated_at": "2026-11-16T14:25:42+09:00",
+      "last_updated_at": "2026-11-25T23:26:41+09:00",
       "quick_links": [
         {
           "label": "公開PWA",
@@ -562,7 +562,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-25T15:37:30+09:00",
+      "last_updated_at": "2026-11-25T23:53:54+09:00",
       "quick_links": [
         {
           "label": "統計学 講義・例題攻略ハブ",
@@ -663,6 +663,10 @@
         ],
         "recent_items": [
           {
+            "title": "動画ID: report_exam_workbook_16.json",
+            "views": "0/100 (UNKNOWN)"
+          },
+          {
             "title": "動画ID: EX-8E",
             "views": "0/100 (UNKNOWN)"
           },
@@ -672,10 +676,6 @@
           },
           {
             "title": "動画ID: EX-8C",
-            "views": "0/100 (UNKNOWN)"
-          },
-          {
-            "title": "動画ID: EX-8B",
             "views": "0/100 (UNKNOWN)"
           }
         ]
@@ -878,7 +878,7 @@
         "sha": "-",
         "last_commit_date": "-"
       },
-      "last_updated_at": "2026-11-25T14:12:15+09:00",
+      "last_updated_at": "2026-11-25T23:18:27+09:00",
       "quick_links": [],
       "stack": [
         "HTML / Tailwind CSS",
