@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_sync": "2026-11-28 05:54 JST",
+    "last_sync": "2026-11-28 10:54 JST",
     "active_count": 8,
     "archived_count": 15,
     "harness_gate_status": "Exit Code 0 (ALL PASS)"
@@ -135,10 +135,10 @@
       "path": "projects/pt_student_portal",
       "url": "https://pt-student-portal.pages.dev",
       "git": {
-        "sha": "249de48",
-        "last_commit_date": "2026-11-27"
+        "sha": "cfc409d",
+        "last_commit_date": "2026-11-28"
       },
-      "last_updated_at": "2026-11-27T22:58:43+09:00",
+      "last_updated_at": "2026-11-28T10:51:15+09:00",
       "quick_links": [
         {
           "label": "公開サイト",
@@ -201,11 +201,11 @@
         {
           "label": "ユニーク訪問 (CF)",
           "value": "210人",
-          "delta": "深度 3.67 PV/人"
+          "delta": "深度 3.71 PV/人"
         },
         {
           "label": "ページビュー (CF)",
-          "value": "770 PV",
+          "value": "780 PV",
           "delta": "スマホ 88%"
         }
       ],
@@ -269,7 +269,7 @@
         "recent_items": [
           {
             "title": "サイト内回遊",
-            "views": "560 PV"
+            "views": "570 PV"
           },
           {
             "title": "Direct / ブックマーク",
@@ -294,10 +294,10 @@
       "path": "projects/pt_student_portal (/admission)",
       "url": "https://pt-student-portal.pages.dev/admission",
       "git": {
-        "sha": "249de48",
-        "last_commit_date": "2026-11-27"
+        "sha": "cfc409d",
+        "last_commit_date": "2026-11-28"
       },
-      "last_updated_at": "2026-11-27T22:58:43+09:00",
+      "last_updated_at": "2026-11-28T10:51:15+09:00",
       "quick_links": [
         {
           "label": "YouTube Ch.B",
@@ -327,7 +327,7 @@
       ],
       "progress": {
         "exists": true,
-        "updated_at": "2026-11-28 05:54",
+        "updated_at": "2026-11-28 10:54",
         "phase": "Ch.B OAuth連携・100本チャット台本・本番LP＆AdSense対策完了",
         "highlights": [
           "Ch.B OAuth2トークン (secrets/token_reskill.json) 取得・初回動画投稿完了",
